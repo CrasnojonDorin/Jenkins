@@ -9,5 +9,5 @@ To run application:
 3) Run application.
 
 ![1](https://github.com/pieetrus/WebStore/blob/master/screenshots/1.jpg)
-![2](https://github.com/pieetrus/WebStore/blob/master/screenshots/2.jpg)
+![2](https://github.com/pieetrus/WebStore/blob/master/screenshots/2.png)
 
