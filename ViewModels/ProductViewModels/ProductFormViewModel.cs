@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using WebStore.Models;
 using Type = WebStore.Models.Type;
 
-namespace WebStore.ViewModels
+namespace WebStore.ViewModels.ProductViewModels
 {
     public class ProductFormViewModel
     {
@@ -15,40 +12,45 @@ namespace WebStore.ViewModels
         public List<Brand> Brands{ get; set; }
         public List<Color> Colors{ get; set; }
         public List<Sex> Sexes { get; set; }
-        public List<Size> Sizes{ get; set; }
+        public List<Size> ShoeSizes{ get; set; }
+        public List<Size> ClothSizes { get; set; }
+
+
+
 
         [Display(Name = "Zdjęcie")]
         public IFormFile Photo { get; set; }
 
 
-
-
         public int Id { get; set; }
 
         [Display(Name = "Typ")]
-        [Required]
+        [Required (ErrorMessage = "Nie wybrano typu")]
         public int TypeId { get; set; }
 
         [Display(Name = "Nazwa")]
-        [Required]
+        [Required(ErrorMessage = "Nie podano nazwy")]
         public string Name { get; set; }
 
 
 
         [Display(Name = "Cena")]
-        [Required]
+        [Required(ErrorMessage = "Nie podano ceny")]
         public double Price { get; set; }
 
+        [Required(ErrorMessage = "Nie wybrano koloru. Jeżeli go nie ma na liście to go dodaj.")]
         [Display(Name = "Kolor")]
         public int? ColorId { get; set; }
 
-        [Display(Name = "Marka")]
+        [Required(ErrorMessage = "Nie wybrano brandu. Jeżeli go nie ma na liście, to go dodaj.")]
+        [Display(Name = "Brand")]
         public int? BrandId { get; set; }
 
         [Display(Name = "Płeć")]
-        [Required]
+        [Required(ErrorMessage = "Nie wybrano płci")]
         public int SexId { get; set; }
-
+        
+        [Required(ErrorMessage = "Nie wybrano rozmiaru. Jeżeli go nie ma możesz go na liście, to dodaj go.")]
         [Display(Name = "Rozmiar")]
         public int? SizeId { get; set; }
 

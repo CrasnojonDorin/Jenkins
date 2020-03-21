@@ -1,6 +1,6 @@
 ﻿@model Product
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = @Model.Name;
 }
 
 
@@ -10,7 +10,7 @@
 
 <div class="header">
     <h1 class="display-4">@Model.Brand.Name @Model.Name <img src="~/images/@Model.Brand.LogoPath" class="logo-image"> </h1>
-    
+
 </div>
 <hr />
 <br />

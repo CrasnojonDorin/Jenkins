@@ -1,0 +1,189 @@
+﻿@model WebStore.ViewModels.ProductViewModels.ProductFormViewModel
+
+@{
+    ViewData["Title"] = "Formularz dodawania produktu";
+}
+
+<h1 class="font-weight-lighter">Dodaj nowy produkt!</h1>
+<hr />
+<br />
+
+<form enctype="multipart/form-data" asp-controller="Product" asp-action="AddProduct" method="post">
+    @Html.ValidationSummary()
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            @Html.LabelFor(p => p.TypeId)
+            @Html.DropDownListFor(p => p.TypeId,
+                new SelectList(Model.Types, "Id", "Name")
+                , new { @class = "form-control", @id = "drop-down-list-types" })
+            @Html.ValidationMessageFor(p => p.TypeId)
+        </div>
+
+
+        <div class="form-group col-md-2">
+
+            @Html.LabelFor(p => p.BrandId)
+            @Html.DropDownListFor(p => p.BrandId,
+                new SelectList(Model.Brands, "Id", "Name")
+                , new { @class = "form-control" })
+            @Html.ValidationMessageFor(p => p.BrandId)
+
+        </div>
+
+        <div class="form-group col-md-2">
+
+            @Html.LabelFor(p => p.ColorId)
+            @Html.DropDownListFor(p => p.ColorId,
+                new SelectList(Model.Colors, "Id", "Name")
+                , new { @class = "form-control" })
+            @Html.ValidationMessageFor(p => p.ColorId)
+        </div>
+
+        <div class="form-group col-md-2">
+
+            @Html.LabelFor(p => p.SexId)
+            @Html.DropDownListFor(p => p.SexId,
+                new SelectList(Model.Sexes, "Id", "Name")
+                , new { @class = "form-control" })
+            @Html.ValidationMessageFor(p => p.SizeId)
+
+        </div>
+
+
+        <div class="form-group col-md-1">
+
+            @Html.LabelFor(p => p.SizeId, new { @id = "shoe-sizes-label" })
+            @Html.DropDownListFor(p => p.SizeId,
+                new SelectList(Model.ShoeSizes, "Id", "Name")
+                , new { @class = "form-control", @id = "shoe-sizes" })
+            @Html.ValidationMessageFor(p => p.SizeId)
+
+
+            @Html.LabelFor(p => p.SizeId, new { @id = "cloth-sizes-label" })
+            @Html.DropDownListFor(p => p.SizeId,
+                new SelectList(Model.ClothSizes, "Id", "Name")
+                , new { @class = "form-control", @id = "cloth-sizes" })
+            @Html.ValidationMessageFor(p => p.SizeId)
+
+        </div>
+
+    </div>
+    <br />
+
+    <div class="form-row">
+
+        <div class="form-group col-md-4">
+
+            @Html.LabelFor(p => p.Name)
+            @Html.TextBoxFor(p => p.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(p => p.Name)
+
+        </div>
+
+    </div>
+
+
+    <div class="form-row">
+
+        <div class="form-group col-md-1">
+            @Html.LabelFor(p => p.Price)
+            @Html.TextBoxFor(p => p.Price, new { @class = "form-control" })
+            @Html.ValidationMessageFor(p => p.Price)
+        </div>
+
+        <div class="col-md-6"></div>
+
+        <div class="form-group col-md-3">
+            @*<div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">Zdjęcie produktu</span>
+                </div>*@
+            @Html.LabelFor(p => p.Photo)
+            <div class="custom-file">
+                <input asp-for="Photo" class="custom-file-input" id="inputGroupFile01"
+                       aria-describedby="inputGroupFileAddon01" />
+                <label class="custom-file-label" for="inputGroupFile01">Wybierz plik</label>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="form-row">
+
+        <div class="form-group col-md-4">
+
+            @Html.LabelFor(p => p.Description)
+            @Html.TextAreaFor(p => p.Description, new { @class = "form-control" })
+            @Html.ValidationMessageFor(p => p.Description)
+        </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Dodaj</button>
+</form>
+
+
+
+@section Scripts{
+
+    <script>
+        //Pokazuje nazwe wgranego pliku
+        $(document).ready(function () {
+            $('.custom-file-input').on("change",
+                function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).next('.custom-file-label').html(fileName);
+                });
+        });
+
+        //Pokazuje odpowiednie rozmiary w zależności od wybranego typu odzieży
+        $(document).ready(function () {
+            var choice = $('#drop-down-list-types').val();
+
+
+            if (choice === '1') {
+                $('#shoe-sizes').show();
+                $('#shoe-sizes-label').show();
+                $('#cloth-sizes').hide();
+                $('#cloth-sizes-label').hide();
+            }
+
+            if (choice === '2') {
+                $('#shoe-sizes').hide();
+                $('#shoe-sizes-label').hide();
+                $('#cloth-sizes').show();
+                $('#cloth-sizes-label').show();
+            }
+
+            $('select').change(function () {
+                choice = $('#drop-down-list-types').val();
+
+                if (choice === '1') {
+                    $('#shoe-sizes').show();
+                    $('#shoe-sizes-label').show();
+                    $('#cloth-sizes').hide();
+                    $('#cloth-sizes-label').hide();
+                }
+
+                if (choice === '2') {
+                    $('#shoe-sizes').hide();
+                    $('#shoe-sizes-label').hide();
+                    $('#cloth-sizes').show();
+                    $('#cloth-sizes-label').show();
+                }
+
+            });
+
+
+        });
+
+        var $choice = $(document).getElementById('dropDownListTypes').value;
+        if ($choice === 1) {
+            alert("JEst");
+        }
+
+    </script>
+
+
+}
+

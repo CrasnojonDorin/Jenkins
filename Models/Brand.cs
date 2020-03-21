@@ -16,6 +16,8 @@ namespace WebStore.Models
 
         public string LogoPath { get; set; }
 
+        public string Description { get; set; }
+
         public virtual List<Product> Products { get; set; }
     }
 }

@@ -130,9 +130,7 @@ namespace WebStore.Controllers
                 {
                     ModelState.AddModelError("", error.Description);
                 }
-
             }
-
 
             model.Genders = _context.Genders.ToList();
 

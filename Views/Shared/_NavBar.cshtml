@@ -16,11 +16,22 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Sklep</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">Lista klientów</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Form">Dodaj produkt</a>
+
+                    <li class="nav-item dropdown text-dark">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Zarządzaj bazą danych
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="ProductForm">Dodaj produkt</a>
+                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="BrandForm">Dodaj brand</a>
+                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="ColorForm">Dodaj kolor</a>
+                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="SizeForm">Dodaj rozmiar</a>
+                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="TypeForm">Dodaj typ</a>
+                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Customer" asp-action="Index">Lista klientów</a>
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Temp</a>
+                        </div>
                     </li>
 
                 </ul>

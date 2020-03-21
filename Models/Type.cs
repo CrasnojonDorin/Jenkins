@@ -12,7 +12,8 @@ namespace WebStore.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Nazwa jest wymagana")]
+        [Display(Name = "Nazwa")]
         public string Name { get; set; }
 
         public virtual List<Size> Size { get; set; }
