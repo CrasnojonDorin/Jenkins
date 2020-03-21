@@ -1,0 +1,83 @@
+﻿@model WebStore.ViewModels.RegisterViewModel
+
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<head>
+    
+    <link type="text/css" rel="stylesheet" href="~/css/Account/register.css"/>
+
+</head>
+
+
+<h1 class="display-2">Dołącz do nas!</h1>
+<hr />
+<br />
+
+
+
+
+@using (Html.BeginForm("Register", "Account"))
+{
+    <div class="text-danger">@Html.ValidationSummary()</div>
+    <div class="form-group">
+        @Html.LabelFor(c => c.Login)
+        @Html.TextBoxFor(c => c.Login, new { @class = "form-control" })
+        @Html.ValidationMessageFor(u=>u.Login)
+    </div>
+
+    <div class="form-row">
+        <div class="col">
+            @Html.LabelFor(c => c.FirstName)
+            @Html.TextBoxFor(c => c.FirstName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(u=>u.FirstName)
+        </div>
+
+        <div class="col">
+            @Html.LabelFor(c => c.LastName)
+            @Html.TextBoxFor(c => c.LastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(u => u.LastName)
+
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group">
+        @Html.LabelFor(c => c.Email)
+        @Html.TextBoxFor(c => c.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(u => u.Email)
+
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(c => c.Password)
+        @Html.PasswordFor(c => c.Password, new { @class = "form-control text-danger" })
+        @Html.ValidationMessageFor(u => u.Password)
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(c => c.ConfirmPassword)
+        @Html.PasswordFor(c => c.ConfirmPassword, new { @class = "form-control text-danger" })
+        @Html.ValidationMessageFor(u => u.ConfirmPassword)
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(u => u.GenderId)
+        @Html.DropDownListFor(u => u.GenderId, new SelectList(Model.Genders, "Id", "Name"), "Wybierz płeć", new { @class = "form-control" })
+        @Html.ValidationMessageFor(u => u.GenderId)
+
+    </div>
+
+
+    <br />
+    <button type="submit" class="btn btn-primary">Zapisz</button>
+
+}
+
+

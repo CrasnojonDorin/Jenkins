@@ -1,0 +1,80 @@
+﻿@model WebStore.ViewModels.ProductFormViewModel
+@{
+    ViewData["Title"] = "Form";
+}
+
+<h1 class="display-2">Dodaj nowy produkt!</h1>
+<hr />
+<br />
+
+
+
+@using (Html.BeginForm("Form", "Product"))
+{
+    <div class="form-group">
+        @Html.LabelFor(p => p.TypeId)
+        @Html.DropDownListFor(p => p.TypeId,
+            new SelectList(Model.Types, "Id", "Name")
+            , "Wybierz typ produktu", new {@class = "form-control"})
+    </div>
+
+    <div class="form-group">
+
+        @Html.LabelFor(p => p.Name)
+        @Html.TextBoxFor(p => p.Name, new {@class = "form-control"})
+
+    </div>
+
+    <div class="form-group">
+
+        @Html.LabelFor(p => p.BrandId)
+        @Html.DropDownListFor(p => p.BrandId,
+            new SelectList(Model.Brands, "Id", "Name")
+            , "Inna", new {@class = "form-control"})
+    </div>
+
+    <div class="form-group">
+
+        @Html.LabelFor(p => p.ColorId)
+        @Html.DropDownListFor(p => p.ColorId,
+            new SelectList(Model.Colors, "Id", "Name")
+            , "Inny", new {@class = "form-control"})
+    </div>
+
+    <div class="form-group">
+
+        @Html.LabelFor(p => p.SexId)
+        @Html.DropDownListFor(p => p.SexId,
+            new SelectList(Model.Sexes, "Id", "Name")
+            , new {@class = "form-control"})
+
+    </div>
+
+    <div class="form-group">
+
+        @Html.LabelFor(p => p.SizeId)
+        @Html.DropDownListFor(p => p.SizeId,
+            new SelectList(Model.Sizes, "Id", "Name")
+            , new {@class = "form-control"})
+
+    </div>
+
+
+    <div class="form-group">
+
+        @Html.LabelFor(p => p.Description)
+        @Html.TextBoxFor(p => p.Description, new {@class = "form-control"})
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.Price)
+        @Html.TextBoxFor(p => p.Price, new {@class = "form-control"})
+    </div>
+
+
+
+
+    @Html.HiddenFor(p=>p.Id)
+}
+

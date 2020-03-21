@@ -1,0 +1,38 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<head>
+    <link href="~/css/Product/details.css" rel="stylesheet" />
+</head>
+
+<div class="header">
+    <h1 class="display-4">@Model.Brand.Name @Model.Name <img src="~/images/@Model.Brand.LogoPath" class="logo-image"> </h1>
+    
+</div>
+<hr />
+<br />
+
+
+<img src="~/images/@Model.PhotoPath" class="product-image">
+
+<p>@Model.Price zł</p>
+
+<p>@Model.Description</p>
+
+@if (@Model.TypeId == 1)
+{
+    <p>Rozmiar: @Model.Size.Name US</p>
+}
+else
+{
+    <p>Rozmiar: @Model.Size.Name</p>
+}
+
+
+
+<button asp-action="AddToBasket" type="button" class="btn btn-primary">
+    Dodaj do koszyka
+</button>

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<User>
+@{
+    ViewData["Title"] = "CustomersList";
+}
+
+
+<link rel="stylesheet" type="text/css" href="~/css/Customer/index.css"/>
+
+
+<h1 class="display-3">Baza klientów</h1>
+<hr />
+<br />
+
+@{
+    int counter = 1;
+}
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Imię i Nazwisko</th>
+        <th scope="col">Login</th>
+        <th scope="col">Edycja</th>
+        <th scope="col">Usuń</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in Model)
+    {
+
+        <tr>
+            <th scope="row">@counter</th>
+            <td>@Html.ActionLink(@user.FirstName + " " + @user.LastName,
+                    "Details", "Customer", new {Id = user.Id})</td>
+            <td>@user.UserName</td>
+            <td>@Html.ActionLink("Edytuj", "Edit",
+                    "Customer", new {Id = user.Id})</td>
+            <td>
+                Usuń (Obsługę z użyciem API trzeba będzie dopisać)
+            </td>
+        </tr>
+        counter++;
+    }
+
+    </tbody>
+</table>
+

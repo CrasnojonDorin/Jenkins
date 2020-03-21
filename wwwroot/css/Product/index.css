@@ -1,0 +1,16 @@
+﻿body {
+    background-color: darksalmon;
+    text-align: center;
+}
+
+
+.custom-div {
+    background-color: whitesmoke;
+    margin: 10px;
+}
+
+
+.product-image {
+    max-height: 200px;
+
+}

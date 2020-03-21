@@ -1,0 +1,35 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Info";
+    var photoPath = "~/Images/" + (Model.Customer.PhotoPath ?? "noimage.png");
+}
+
+<h1 class="display-4">@Model.FirstName @Html.DisplayText(" ") @Model.LastName</h1>
+<hr />
+<br />
+<p>Usuń</p>
+
+<img src="@photoPath" class="rounded float-right img-fluid" asp-append-version="true" style="height: 25%; width: 25%;">
+
+<ul>
+
+    <div class="card-body text-center">
+
+
+        <li>Email: @Model.Email</li>
+        <li>Płeć: @Model.Customer.Gender.Name</li>
+        <li>Numer telefonu: @Model.Customer.PhoneNumber</li>
+        <li>Miasto: @Model.Customer.Town</li>
+
+
+    </div>
+
+
+
+
+
+
+
+</ul>
+
+

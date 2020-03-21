@@ -1,0 +1,56 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <head>
+        <link href="~/css/Product/index.css" rel="stylesheet" />
+    </head>
+
+
+<h1 class="display-4">Przed Tobą cały nasz asortyment!</h1>
+
+<hr />
+<br />
+
+<div class="container">
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4">
+                <div class="custom-div">
+                    <img src="images/@product.PhotoPath" class="product-image">
+                    <p>@product.Brand.Name @Html.DisplayText(" ") @product.Name</p>
+                    <p>@product.Price zł</p>
+                    @if (@product.TypeId == 1)
+                    {
+                        <p>Rozmiar: @product.Size.Name US</p>
+                    }
+                    else
+                    {
+                        <p>Rozmiar: @product.Size.Name</p>
+                    }
+                    <button asp-action="AddToBasket" type="button" class="btn btn-primary">
+                        Dodaj do koszyka
+                    </button>
+                    
+                    
+                    <a asp-action="Details" asp-route-id="@product.Id">
+                        <button  class="btn btn-primary">
+                            Zobacz szczegóły
+                        </button>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
