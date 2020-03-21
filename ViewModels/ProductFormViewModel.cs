@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using WebStore.Models;
 using Type = WebStore.Models.Type;
 
@@ -16,7 +17,8 @@ namespace WebStore.ViewModels
         public List<Sex> Sexes { get; set; }
         public List<Size> Sizes{ get; set; }
 
-
+        [Display(Name = "Zdjęcie")]
+        public IFormFile Photo { get; set; }
 
 
 
@@ -32,8 +34,6 @@ namespace WebStore.ViewModels
         public string Name { get; set; }
 
 
-        [Display(Name = "Zdjęcie")]
-        public string PhotoPath { get; set; }
 
         [Display(Name = "Cena")]
         [Required]

@@ -9,72 +9,121 @@
 
 
 
-@using (Html.BeginForm("Form", "Product"))
-{
-    <div class="form-group">
-        @Html.LabelFor(p => p.TypeId)
-        @Html.DropDownListFor(p => p.TypeId,
-            new SelectList(Model.Types, "Id", "Name")
-            , "Wybierz typ produktu", new {@class = "form-control"})
-    </div>
+<form enctype="multipart/form-data" asp-controller="Product" asp-action="Add" method="post">
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            @Html.LabelFor(p => p.TypeId)
+            @Html.DropDownListFor(p => p.TypeId,
+                new SelectList(Model.Types, "Id", "Name")
+                , new { @class = "form-control" })
+        </div>
 
-    <div class="form-group">
+        <div class="form-group col-md-2">
 
-        @Html.LabelFor(p => p.Name)
-        @Html.TextBoxFor(p => p.Name, new {@class = "form-control"})
+            @Html.LabelFor(p => p.BrandId)
+            @Html.DropDownListFor(p => p.BrandId,
+                new SelectList(Model.Brands, "Id", "Name")
+                , new { @class = "form-control" })
+        </div>
 
-    </div>
+        <div class="form-group col-md-2">
 
-    <div class="form-group">
+            @Html.LabelFor(p => p.ColorId)
+            @Html.DropDownListFor(p => p.ColorId,
+                new SelectList(Model.Colors, "Id", "Name")
+                , new { @class = "form-control" })
+        </div>
 
-        @Html.LabelFor(p => p.BrandId)
-        @Html.DropDownListFor(p => p.BrandId,
-            new SelectList(Model.Brands, "Id", "Name")
-            , "Inna", new {@class = "form-control"})
-    </div>
+        <div class="form-group col-md-2">
 
-    <div class="form-group">
+            @Html.LabelFor(p => p.SexId)
+            @Html.DropDownListFor(p => p.SexId,
+                new SelectList(Model.Sexes, "Id", "Name")
+                , new { @class = "form-control" })
 
-        @Html.LabelFor(p => p.ColorId)
-        @Html.DropDownListFor(p => p.ColorId,
-            new SelectList(Model.Colors, "Id", "Name")
-            , "Inny", new {@class = "form-control"})
-    </div>
+        </div>
 
-    <div class="form-group">
 
-        @Html.LabelFor(p => p.SexId)
-        @Html.DropDownListFor(p => p.SexId,
-            new SelectList(Model.Sexes, "Id", "Name")
-            , new {@class = "form-control"})
+        <div class="form-group col-md-1">
 
-    </div>
+            @Html.LabelFor(p => p.SizeId)
+            @Html.DropDownListFor(p => p.SizeId,
+                new SelectList(Model.Sizes, "Id", "Name")
+                , new { @class = "form-control" })
 
-    <div class="form-group">
-
-        @Html.LabelFor(p => p.SizeId)
-        @Html.DropDownListFor(p => p.SizeId,
-            new SelectList(Model.Sizes, "Id", "Name")
-            , new {@class = "form-control"})
+        </div>
 
     </div>
+    <br />
 
+    <div class="form-row">
 
-    <div class="form-group">
+        <div class="form-group col-md-4">
 
-        @Html.LabelFor(p => p.Description)
-        @Html.TextBoxFor(p => p.Description, new {@class = "form-control"})
+            @Html.LabelFor(p => p.Name)
+            @Html.TextBoxFor(p => p.Name, new { @class = "form-control" })
 
-    </div>
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(p => p.Price)
-        @Html.TextBoxFor(p => p.Price, new {@class = "form-control"})
     </div>
 
 
+    <div class="form-row">
+
+        <div class="form-group col-md-1">
+            @Html.LabelFor(p => p.Price)
+            @Html.TextBoxFor(p => p.Price, new { @class = "form-control" })
+        </div>
+        
+        <div class="col-md-6"></div>
+        
+        <div class="form-group col-md-3">
+            @*<div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupFileAddon01">Zdjęcie produktu</span>
+            </div>*@
+            @Html.LabelFor(p=>p.Photo)
+            <div class="custom-file">
+                <input asp-for="Photo" class="custom-file-input" id="inputGroupFile01"
+                       aria-describedby="inputGroupFileAddon01" />
+                <label class="custom-file-label" for="inputGroupFile01">Wybierz plik</label>
+            </div>
+        </div>
+
+    </div>
 
 
-    @Html.HiddenFor(p=>p.Id)
+    <div class="form-row">
+
+        <div class="form-group col-md-4">
+
+            @Html.LabelFor(p => p.Description)
+            @Html.TextAreaFor(p => p.Description, new { @class = "form-control" })
+        </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Dodaj</button>
+</form>
+
+
+
+
+
+
+
+
+
+@section Scripts{
+
+    <script>
+        //Pokazuje nazwe wgranego pliku
+        $(document).ready(function () {
+            $('.custom-file-input').on("change",
+                function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).next('.custom-file-label').html(fileName);
+                });
+        });
+    </script>
 }
 
