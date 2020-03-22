@@ -6,8 +6,8 @@
 }
 
 <head>
-    
-    <link type="text/css" rel="stylesheet" href="~/css/Account/register.css"/>
+
+    <link type="text/css" rel="stylesheet" href="~/css/Account/register.css" />
 
 </head>
 
@@ -21,18 +21,20 @@
 
 @using (Html.BeginForm("Register", "Account"))
 {
+    @Html.AntiForgeryToken()
+
     <div class="text-danger">@Html.ValidationSummary()</div>
     <div class="form-group">
         @Html.LabelFor(c => c.Login)
         @Html.TextBoxFor(c => c.Login, new { @class = "form-control" })
-        @Html.ValidationMessageFor(u=>u.Login)
+        @Html.ValidationMessageFor(u => u.Login)
     </div>
 
     <div class="form-row">
         <div class="col">
             @Html.LabelFor(c => c.FirstName)
             @Html.TextBoxFor(c => c.FirstName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(u=>u.FirstName)
+            @Html.ValidationMessageFor(u => u.FirstName)
         </div>
 
         <div class="col">

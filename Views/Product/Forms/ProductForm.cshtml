@@ -9,6 +9,8 @@
 <br />
 
 <form enctype="multipart/form-data" asp-controller="Product" asp-action="AddProduct" method="post">
+    @Html.AntiForgeryToken()
+
     @Html.ValidationSummary()
     <div class="form-row">
         <div class="form-group col-md-2">

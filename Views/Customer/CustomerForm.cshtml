@@ -10,6 +10,8 @@
 
 
 <form enctype="multipart/form-data" asp-controller="Customer" asp-action="Save" method="post">
+    @Html.AntiForgeryToken()
+
     <div class="validation-summary-errors">
         @Html.ValidationSummary()
     </div>

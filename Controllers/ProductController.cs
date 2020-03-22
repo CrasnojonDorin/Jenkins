@@ -97,6 +97,7 @@ namespace WebStore.Controllers
             return View("Forms/BrandForm", new BrandFormViewModel {Products = _context.Products.ToList()});
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult AddProduct(ProductFormViewModel model)
         {
@@ -155,6 +156,7 @@ namespace WebStore.Controllers
 
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult AddBrand(BrandFormViewModel model)
         {
@@ -195,6 +197,7 @@ namespace WebStore.Controllers
             return View("Forms/BrandForm", viewModel);
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult AddType(Type model)
         {
@@ -216,6 +219,7 @@ namespace WebStore.Controllers
             return View("Forms/TypeForm",viewModel);
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult AddSize(SizeFormViewModel model)
         {
@@ -242,6 +246,7 @@ namespace WebStore.Controllers
             return View("Forms/SizeForm", viewModel);
         }
 
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult AddColor(ColorFormViewModel model)
         {

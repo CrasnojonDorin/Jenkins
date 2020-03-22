@@ -8,13 +8,14 @@
 <br />
 
 <form enctype="multipart/form-data" asp-controller="Product" asp-action="AddBrand" method="post">
+    @Html.AntiForgeryToken()
     @Html.ValidationSummary()
     <div class="form-row">
 
         <div class="form-group col-md-3">
 
             @Html.LabelFor(b => b.Name)
-            @Html.TextBoxFor(b => b.Name, new { @class = "form-control" })
+            @Html.TextBoxFor(b => b.Name, new {@class = "form-control"})
             @Html.ValidationMessageFor(b => b.Name)
         </div>
 
@@ -25,26 +26,26 @@
             @Html.LabelFor(p => p.Photo)
             <div class="custom-file">
                 <input asp-for="Photo" class="custom-file-input" id="inputGroupFile01"
-                       aria-describedby="inputGroupFileAddon01" />
+                       aria-describedby="inputGroupFileAddon01"/>
                 <label class="custom-file-label" for="inputGroupFile01">Wybierz plik</label>
             </div>
             @Html.ValidationMessageFor(p => p.Photo)
         </div>
     </div>
-    <br />
+    <br/>
     <div class="form-row">
 
 
         <div class="form-group col-md-6">
 
             @Html.LabelFor(b => b.Description)
-            @Html.TextAreaFor(b => b.Description, new { @class = "form-control" })
+            @Html.TextAreaFor(b => b.Description, new {@class = "form-control"})
             @Html.ValidationMessageFor(b => b.Description)
         </div>
     </div>
 
-    <br />
-    <br />
+    <br/>
+    <br/>
 
     <button type="submit" class="btn btn-primary ">Dodaj</button>
 

@@ -79,7 +79,8 @@ namespace WebStore.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
+        [ValidateAntiForgeryToken]
+        [HttpPost]
         public IActionResult Edit(string id)
         {
             var user = _context.Users
@@ -109,6 +110,8 @@ namespace WebStore.Controllers
         /// </summary>
         /// <param name="customer"></param>
         /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Save(CustomerFormViewModel model)
         {
 

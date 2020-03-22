@@ -53,7 +53,7 @@ namespace WebStore.Controllers
 
         }
 
-
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
@@ -86,7 +86,7 @@ namespace WebStore.Controllers
         }
 
 
-
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -133,7 +133,6 @@ namespace WebStore.Controllers
 
             return View("Register", model);
         }
-
 
 
         [HttpPost]
