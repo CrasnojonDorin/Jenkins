@@ -1,4 +1,3 @@
-using System;
 
 namespace WebStore.Models
 {
