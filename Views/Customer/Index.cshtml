@@ -11,14 +11,11 @@
 <hr />
 <br />
 
-@{
-    int counter = 1;
-}
+
 
 <table class="table table-hover">
     <thead>
     <tr>
-        <th scope="col">#</th>
         <th scope="col">Imię i Nazwisko</th>
         <th scope="col">Login</th>
         <th scope="col">Edycja</th>
@@ -29,20 +26,42 @@
     @foreach (var user in Model)
     {
 
-        <tr>
-            <th scope="row">@counter</th>
+        <tr id ="@user.UserName">
             <td>@Html.ActionLink(@user.FirstName + " " + @user.LastName,
-                    "Details", "Customer", new {Id = user.Id})</td>
+                    "Details", "Customer", new {username = user.UserName})</td>
             <td>@user.UserName</td>
             <td>@Html.ActionLink("Edytuj", "Edit",
                     "Customer", new {Id = user.Id})</td>
             <td>
-                Usuń (Obsługę z użyciem API trzeba będzie dopisać)
+                <button data-user-username="@user.UserName" type="button" class="btn btn-danger btn-sm js-delete-user">Usuń</button>
             </td>
         </tr>
-        counter++;
     }
 
     </tbody>
 </table>
 
+
+@section scripts
+{ 
+    
+    <script>
+
+        $(document).ready(function() {
+            $(".js-delete-user").click(function(e) {
+                var button = $(e.target);
+                var username = button.attr("data-user-username");
+                $.ajax({
+                    url: '/api/account/'.concat(username),
+                    type: 'DELETE',
+                    success: function (response) {
+                        $("#".concat(username)).fadeOut();
+                    }
+                });
+            });
+        });
+
+
+    </script>
+
+}

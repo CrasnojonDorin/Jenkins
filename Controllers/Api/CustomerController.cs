@@ -55,14 +55,12 @@ namespace WebStore.Controllers.Api
         {
             if (customerDto == null)
                 return Conflict("Nie można dodać klienta");
-            else
-            {
-                var customer = _mapper.Map<CustomerSaveDTO, Customer>(customerDto);
-                _context.Customers.Add(customer);
-                _context.SaveChanges();
-            }
+            var customer = _mapper.Map<CustomerSaveDTO, Customer>(customerDto);
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
             
             return NoContent();
         }
+
     }
 }

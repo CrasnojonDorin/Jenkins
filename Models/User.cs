@@ -17,6 +17,5 @@ namespace WebStore.Models
         public Customer Customer { get; set; }
 
 
-
     }
 }

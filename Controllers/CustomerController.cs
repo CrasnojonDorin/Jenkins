@@ -46,12 +46,12 @@ namespace WebStore.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(string id)
+        public IActionResult Details(string username)
         {
             var user = _context.Users
                 .Include(u=>u.Customer)
                 .Include(u=>u.Customer.Gender)
-                .Single(u => u.Id.Equals(id));
+                .Single(u => u.UserName.Equals(username));
 
 
 
@@ -79,8 +79,7 @@ namespace WebStore.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [ValidateAntiForgeryToken]
-        [HttpPost]
+        [HttpGet]
         public IActionResult Edit(string id)
         {
             var user = _context.Users
@@ -163,22 +162,6 @@ namespace WebStore.Controllers
             return View("CustomerForm", viewModel);
 
 
-        }
-
-        /// <summary>
-        /// Usuwa klienta o podanym Id z bazy
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpDelete]
-        public IActionResult Delete(int id)
-        {
-            var customer = _context.Customers.Single(c => c.Id == id);
-
-            _context.Remove(customer);
-            _context.SaveChanges();
-
-            return RedirectToAction("Index");
         }
 
 

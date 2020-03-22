@@ -9,11 +9,15 @@
 <br />
 <p>Usuń</p>
 
-<img src="@photoPath" class="rounded float-right img-fluid" asp-append-version="true" style="height: 25%; width: 25%;">
+@if (Model.Customer.PhotoPath != null)
+{
+    <img src="@photoPath" class="rounded float-right img-fluid" asp-append-version="true" style="height: 25%; width: 25%;">
+}
 
-<ul>
+<div class="card-body text-center">
 
-    <div class="card-body text-center">
+    <ul>
+
 
 
         <li>Email: @Model.Email</li>
@@ -22,14 +26,8 @@
         <li>Miasto: @Model.Customer.Town</li>
 
 
-    </div>
 
+    </ul>
 
-
-
-
-
-
-</ul>
-
+</div>
 

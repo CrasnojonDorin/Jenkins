@@ -16,6 +16,7 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Sklep</a>
                     </li>
+                    
 
                     <li class="nav-item dropdown text-dark">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,20 +35,36 @@
                         </div>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="/swagger" class="nav-link text-dark">Swagger</a>
+                    </li>
                 </ul>
 
                 <ul class="navbar-nav mr-auto">
 
                     @if (signInManager.IsSignedIn(User))
                     {
-                        <li class="nav-item">
-                            <form class="nav-link text-dark" method="post" asp-action="Logout" asp-controller="Account">
-                                <button type="submit" class="nav-link btn btn-link py-0"
-                                        style="width: auto">
-                                    Wyloguj @User.Identity.Name
-                                </button>
-                            </form>
+
+                        <li class="nav-item dropdown text-dark">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @User.Identity.Name
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                <a class="dropdown-item text-dark" asp-area="" asp-controller="" asp-action="">Mój profil</a>
+                                <a class="dropdown-item text-dark" asp-area="" asp-controller="" asp-action="">Historia zamówień</a>
+
+                                <div class="dropdown-divider"></div>
+
+                                <form class="nav-link text-dark" method="post" asp-action="Logout" asp-controller="Account">
+                                    <button type="submit" class="nav-link btn btn-link py-0 dropdown-item text-dark">
+                                        Wyloguj
+                                    </button>
+                                </form>
+
+                            </div>
                         </li>
+
                     }
                     else
                     {
@@ -59,6 +76,7 @@
                         </li>
                     }
 
+                   
 
                 </ul>
             </div>

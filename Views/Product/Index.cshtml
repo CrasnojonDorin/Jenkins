@@ -3,9 +3,9 @@
     ViewData["Title"] = "Sklep";
 }
 
-    <head>
-        <link href="~/css/Product/index.css" rel="stylesheet" />
-    </head>
+<head>
+    <link href="~/css/Product/index.css" rel="stylesheet" />
+</head>
 
 
 <h1 class="display-4">Przed Tobą cały nasz asortyment!</h1>
@@ -17,7 +17,7 @@
     <div class="row">
         @foreach (var product in Model)
         {
-            <div class="col-md-4">
+            <div class="col-md-4" id ="delete-button-@product.Id">
                 <div class="custom-div">
                     <img src="images/@product.PhotoPath" class="product-image">
                     <p>@product.Brand.Name @Html.DisplayText(" ") @product.Name</p>
@@ -30,16 +30,30 @@
                     {
                         <p>Rozmiar: @product.Size.Name</p>
                     }
-                    <button asp-action="AddToBasket" type="button" class="btn btn-primary">
-                        Dodaj do koszyka
-                    </button>
-                    
-                    
-                    <a asp-action="Details" asp-route-id="@product.Id">
-                        <button  class="btn btn-primary">
-                            Zobacz szczegóły
-                        </button>
-                    </a>
+
+                    <div class="container">
+                        <div class="row">
+
+                            <div class=" col-md-6">
+                                <button asp-action="AddToBasket" type="button" class="btn btn-primary btn-sm">
+                                    Dodaj do koszyka
+                                </button>
+                            </div>
+
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary btn-sm" 
+                                        onclick="location.href = '@Url.Action("Details", "Product",new{product.Id})'">
+                                    Zobacz szczegóły
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-md-center">
+                            <button data-product-id="@product.Id" type="button" class="btn btn-danger btn-sm js-delete-product col-md-4">Usuń</button>
+                        </div>
+
+
+                    </div>
                 </div>
             </div>
         }
@@ -47,7 +61,29 @@
 
 </div>
 
+@section scripts
+{
 
+    <script>
+
+        $(document).ready(function() {
+            $(".js-delete-product").click(function(e) {
+                var button = $(e.target);
+                var id = button.attr("data-product-id");
+                $.ajax({
+                    url: '/api/product/'.concat(id),
+                    type: 'DELETE',
+                    success: function (response) {
+                        $("#delete-button-".concat(id)).fadeOut();
+                    }
+                });
+            });
+        });
+
+
+    </script>
+
+}
 
 
 
