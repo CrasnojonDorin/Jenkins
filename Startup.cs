@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 using WebStore.Models;
 
 namespace WebStore
@@ -26,7 +27,18 @@ namespace WebStore
             //Dodanie generatora swaggera, definicja dokumentu Swaggera
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo{Title = "Store API", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "WebStore API",
+                    Version = "v1",
+                    Description = "API do zarz¹dzania baz¹ WebStore",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Jakub Pietrus",
+                        Email = "pietrusjakub@gmail.com",
+                        Url = new Uri("https://github.com/pieetrus"),
+                    },
+                });
             });
 
 
