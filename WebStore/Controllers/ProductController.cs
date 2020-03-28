@@ -14,14 +14,12 @@ namespace WebStore.Controllers
     public class ProductController : Controller
     {
         private readonly StoreContext _context;
-        private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _hostEnvironment;
 
 
-        public ProductController(StoreContext storeContext, IMapper mapper, IWebHostEnvironment hostEnvironment)
+        public ProductController(StoreContext storeContext, IWebHostEnvironment hostEnvironment)
         {
             _context = storeContext;
-            _mapper = mapper;
             _hostEnvironment = hostEnvironment;
         }
 
@@ -99,7 +97,7 @@ namespace WebStore.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult AddProduct(ProductFormViewModel model)
+        public IActionResult ProductForm(ProductFormViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -158,7 +156,7 @@ namespace WebStore.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult AddBrand(BrandFormViewModel model)
+        public IActionResult BrandForm(BrandFormViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -199,7 +197,7 @@ namespace WebStore.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult AddType(Type model)
+        public IActionResult TypeForm(Type model)
         {
             if (ModelState.IsValid)
             {
@@ -221,7 +219,7 @@ namespace WebStore.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult AddSize(SizeFormViewModel model)
+        public IActionResult SizeForm(SizeFormViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -248,7 +246,7 @@ namespace WebStore.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult AddColor(ColorFormViewModel model)
+        public IActionResult ColorForm(ColorFormViewModel model)
         {
             if (ModelState.IsValid)
             {

@@ -12,25 +12,17 @@ namespace WebStore.Controllers
     {
 
         private readonly StoreContext _context;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public AccountController(StoreContext context, IMapper mapper,
+        public AccountController(StoreContext context, 
             UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _context = context;
-            _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
 
 
         public IActionResult Register()
