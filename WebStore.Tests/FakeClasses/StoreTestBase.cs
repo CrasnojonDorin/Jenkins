@@ -42,10 +42,22 @@ namespace WebStore.Tests
                 }
             };
 
+            var users = new List<User>()
+            {
+                new User {UserName = "TestUserName", FirstName = "Test", LastName = "Name", Email = "test@gmail.com"}
+            };
+
+
             foreach (var product in products)
             {
                 _context.Products.Add(product);
             }
+
+            foreach (var user in users)
+            {
+                _context.Users.Add(user);
+            }
+
 
             _context.SaveChanges();
         }

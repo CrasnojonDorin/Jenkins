@@ -30,7 +30,8 @@
             <td>@Html.ActionLink(@user.FirstName + " " + @user.LastName,
                     "Details", "Customer", new {username = user.UserName})</td>
             <td>@user.UserName</td>
-            <td>@Html.ActionLink("Edytuj", "Edit",
+            <td>
+                @Html.ActionLink("Edytuj", "CustomerForm",
                     "Customer", new {Id = user.Id})</td>
             <td>
                 <button data-user-username="@user.UserName" type="button" class="btn btn-danger btn-sm js-delete-user">Usuń</button>

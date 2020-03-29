@@ -98,8 +98,8 @@ namespace WebStore.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-
-                  var userInDb = _context.Users.Single(u => u.UserName == user.UserName);
+                    
+                    var userInDb = _context.Users.Single(u => u.UserName == user.UserName);
 
                    var customer = new Customer
                    {

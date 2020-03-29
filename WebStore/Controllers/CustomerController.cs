@@ -1,12 +1,12 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using WebStore.Models;
 using WebStore.ViewModels;
 
@@ -79,8 +79,8 @@ namespace WebStore.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet]
-        public IActionResult Edit(string id)
+        [HttpPost]
+        public IActionResult CustomerForm(string id)
         {
             var user = _context.Users
                 .Include(u => u.Customer)
@@ -111,7 +111,7 @@ namespace WebStore.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Save(CustomerFormViewModel model)
+        public async Task<IActionResult> CustomerForm(CustomerFormViewModel model)
         {
 
             if (ModelState.IsValid)

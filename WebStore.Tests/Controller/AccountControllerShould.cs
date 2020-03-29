@@ -12,7 +12,7 @@ namespace WebStore.Tests.Controller
     {
         private Mock<FakeSignInManager> _mockSignInManager;
         private Mock<FakeUserManager> _mockUserManager;
-        private readonly AccountController _sut;
+        private AccountController _sut;
 
 
         public AccountControllerShould()
@@ -61,6 +61,8 @@ namespace WebStore.Tests.Controller
                 .Returns(true)
                 .Verifiable();
 
+            _sut = new AccountController(_context, _mockUserManager.Object, _mockSignInManager.Object);
+
             //Act
             _sut.Url = mockUrlHelper.Object;
             var result = await _sut.Login(new LoginViewModel(), "testPath");
@@ -86,6 +88,8 @@ namespace WebStore.Tests.Controller
                 .Setup(x => x.IsLocalUrl(It.IsAny<string>()))
                 .Returns(false)
                 .Verifiable();
+            _sut = new AccountController(_context, _mockUserManager.Object, _mockSignInManager.Object);
+
 
             //Act
             _sut.Url = mockUrlHelper.Object;
@@ -114,6 +118,42 @@ namespace WebStore.Tests.Controller
 
 
         //todo register tests
+
+        //[Fact]
+        //public async void RedirectUserToHomePageAfterSuccessfulRegistration()
+        //{
+        //    //Arrange
+        //    _mockSignInManager = new FakeSignInManagerBuilder()
+        //        .With(x => x.Setup(sm => sm.PasswordSignInAsync(It.IsAny<string>(),
+        //                It.IsAny<string>(),
+        //                It.IsAny<bool>(),
+        //                It.IsAny<bool>()))
+        //            .ReturnsAsync(SignInResult.Success))
+        //        .Build();
+
+        //    _mockUserManager = new FakeUserManagerBuilder()
+        //        .With(x => x.Setup(x => x.CreateAsync(It.IsAny<User>(), It.IsAny<string>()))
+        //            .ReturnsAsync(IdentityResult.Success)).Build();
+
+        //    var mockUrlHelper = new Mock<IUrlHelper>(MockBehavior.Strict);
+        //    mockUrlHelper
+        //        .Setup(x => x.IsLocalUrl(It.IsAny<string>()))
+        //        .Returns(false)
+        //        .Verifiable();
+
+        //    _sut = new AccountController(_context, _mockUserManager.Object, _mockSignInManager.Object);
+
+
+        //    //Act
+        //    _sut.Url = mockUrlHelper.Object;
+        //    var result = await _sut.Register(new RegisterViewModel());
+
+        //    //Assert
+        //    var actionResult = Assert.IsType<RedirectToActionResult>(result);
+        //    Assert.Equal(actionResult.ActionName, $"Index");
+        //    Assert.Equal(actionResult.ControllerName, $"Home");
+
+        //}
 
 
         [Fact]
