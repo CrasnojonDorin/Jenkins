@@ -77,15 +77,15 @@ namespace WebStore.Controllers
         /// <summary>
         /// Edycja istniejącego klienta korzystając z wcześniej utworzonego formularza
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="username"></param>
         /// <returns></returns>
-        [HttpPost]
-        public IActionResult CustomerForm(string id)
+        [HttpGet]
+        public IActionResult CustomerForm(string username)
         {
             var user = _context.Users
                 .Include(u => u.Customer)
                 .Include(u => u.Customer.Gender)
-                .SingleOrDefault(c => c.Id == id);
+                .SingleOrDefault(c => c.UserName == username);
 
             if (user == null)
                 return NotFound();

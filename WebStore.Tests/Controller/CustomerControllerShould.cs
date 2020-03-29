@@ -72,8 +72,13 @@ namespace WebStore.Tests.Controller
             //Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsType<CustomerFormViewModel>(viewResult.Model);
-        }
+            Assert.Equal(customerViewModel.FirstName, model.FirstName);
+            Assert.Equal(customerViewModel.GenderId, model.GenderId);
+            Assert.Equal(customerViewModel.LastName, model.LastName);
+            Assert.Equal(customerViewModel.PhoneNumber, model.PhoneNumber);
+            Assert.Equal(customerViewModel.Town, model.Town);
 
+        }
 
 
     }
