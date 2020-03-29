@@ -8,12 +8,8 @@ namespace WebStore.Models.DTO
 
         public DomainProfile()
         {
-            CreateMap<Customer, CustomerDTO>();
-            CreateMap<CustomerDTO, Customer>();
-            CreateMap<CustomerSaveDTO, Customer>();
-            CreateMap<Customer, CustomerSaveDTO>();
             CreateMap<User, User>();
-            CreateMap<CustomerFormViewModel, User>();
+            CreateMap<UserFormViewModel, User>();
             CreateMap<UserDTO, User>();
             CreateMap<User, UserDTO>();
             CreateMap<Product, ProductDTO>();

@@ -25,9 +25,9 @@
 
     <div class="text-danger">@Html.ValidationSummary()</div>
     <div class="form-group">
-        @Html.LabelFor(c => c.Login)
-        @Html.TextBoxFor(c => c.Login, new { @class = "form-control" })
-        @Html.ValidationMessageFor(u => u.Login)
+        @Html.LabelFor(c => c.UserName)
+        @Html.TextBoxFor(c => c.UserName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(u => u.UserName)
     </div>
 
     <div class="form-row">

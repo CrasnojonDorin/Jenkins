@@ -41,6 +41,14 @@
     <Compile Remove="Migrations\20200216235938_ProductIdIdentityColumn.Designer.cs" />
     <Compile Remove="Migrations\20200321111828_CortezBugFixed.cs" />
     <Compile Remove="Migrations\20200321111828_CortezBugFixed.Designer.cs" />
+    <Compile Remove="Migrations\20200329162301_DeleteCustomerTableAddAllPropertiesToUserTable.cs" />
+    <Compile Remove="Migrations\20200329162301_DeleteCustomerTableAddAllPropertiesToUserTable.Designer.cs" />
+    <Compile Remove="Migrations\20200329162522_DeleteCustomerTableAddAllPropertiesToUserTable.cs" />
+    <Compile Remove="Migrations\20200329162522_DeleteCustomerTableAddAllPropertiesToUserTable.Designer.cs" />
+    <Compile Remove="Migrations\20200329162708_DeleteCustomerTableAddAllPropertiesToUserTable.cs" />
+    <Compile Remove="Migrations\20200329162708_DeleteCustomerTableAddAllPropertiesToUserTable.Designer.cs" />
+    <Compile Remove="Migrations\20200329163420_AddUsersTable.cs" />
+    <Compile Remove="Migrations\20200329163420_AddUsersTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿@model WebStore.ViewModels.LoginViewModel
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "UserName";
 }
 
 <h1 class="display-4">Zaloguj się!</h1>
@@ -17,9 +17,9 @@
         @Html.ValidationSummary()
     </div>
     <div class="form-group">
-        @Html.LabelFor(u => u.Login)
-        @Html.TextBoxFor(u => u.Login, new { @class = "form-control" })
-        @Html.ValidationMessageFor(u => u.Login)
+        @Html.LabelFor(u => u.UserName)
+        @Html.TextBoxFor(u => u.UserName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(u => u.UserName)
     </div>
 
 

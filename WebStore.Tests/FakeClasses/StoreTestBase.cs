@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using WebStore.Models;
 
-namespace WebStore.Tests
+namespace WebStore.Tests.FakeClasses
 {
     public class StoreTestBase : IDisposable
     {
@@ -44,7 +44,7 @@ namespace WebStore.Tests
 
             var users = new List<User>()
             {
-                new User {UserName = "TestUserName", FirstName = "Test", LastName = "Name", Email = "test@gmail.com"}
+                new User {UserName = "TestUserName", FirstName = "Test", LastName = "Name", Email = "test@gmail.com", GenderId = 1, Id=1}
             };
 
 

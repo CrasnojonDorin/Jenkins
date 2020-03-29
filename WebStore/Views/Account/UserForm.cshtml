@@ -1,15 +1,15 @@
-﻿@model WebStore.ViewModels.CustomerFormViewModel
+﻿@model WebStore.ViewModels.UserFormViewModel
 @{
-    ViewData["Title"] = "CustomerForm";
+    ViewData["Title"] = "Formularz użytkownika";
 }
 
-<h1 class="display-4">Formularz klienta</h1>
+<h1 class="display-4">Formularz użytkownika</h1>
 
 <hr />
 <br />
 
 
-<form enctype="multipart/form-data" asp-controller="Customer" asp-action="CustomerForm" method="post">
+<form enctype="multipart/form-data" asp-controller="Account" asp-action="UserForm" method="post">
     @Html.AntiForgeryToken()
 
     <div class="validation-summary-errors">

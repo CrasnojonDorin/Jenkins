@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
 using WebStore.Models;
 
 namespace WebStore.ViewModels
 {
-    public class CustomerFormViewModel
+    public class UserFormViewModel
     {
         public IEnumerable<Gender> Genders { get; set; }
 
-
-        public string Id { get; set; }
+        public int Id { get; set; }
         
         [Required]
         [Display(Name = "Imię")]
@@ -23,20 +22,17 @@ namespace WebStore.ViewModels
         public string LastName { get; set; }
 
 
-
         [MaxLength(35)]
         [Display(Name = "Miasto")]
         public string Town { get; set; }
 
         [Display(Name = "Numer telefonu")]
         [DataType(DataType.PhoneNumber)]
-        public int? PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         [Required]
         [Display(Name = "Płeć")]
         public int GenderId { get; set; }
-
-
 
         public IFormFile Photo { get; set; }
 

@@ -24,7 +24,7 @@ namespace WebStore.Models.DTO
         public string Town { get; set; }
 
 
-        //public string Login { get; set; }
+        //public string UserName { get; set; }
 
         //public string Password { get; set; }
 

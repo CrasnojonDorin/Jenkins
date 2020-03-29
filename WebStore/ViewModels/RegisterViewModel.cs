@@ -22,7 +22,7 @@ namespace WebStore.ViewModels
         [Required]
         [MinLength(5)]
         [MaxLength(15)]
-        public string Login { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

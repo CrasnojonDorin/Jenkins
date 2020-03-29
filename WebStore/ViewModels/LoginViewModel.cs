@@ -6,7 +6,7 @@ namespace WebStore.ViewModels
     {
 
         [Required]
-        public string Login { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

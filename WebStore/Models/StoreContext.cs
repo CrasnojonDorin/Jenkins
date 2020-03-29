@@ -1,15 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebStore.Models
 {
-    public class StoreContext : IdentityDbContext<User>
+    public class StoreContext : IdentityDbContext<User, IntRole, int>
     {
 
-        public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }
         public override DbSet<User> Users { get; set; }
-
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
         public virtual DbSet<Product> Products{ get; set; }
@@ -42,19 +41,42 @@ namespace WebStore.Models
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Customer>(c =>
+
+
+
+            //zmiana nazw tabel z domyślnych na ładniejsze
+            modelBuilder.Entity<User>(i =>
             {
-                c.HasKey(c => c.Id);
-                c.Property(c => c.Id).ValueGeneratedOnAdd();
+                i.ToTable("Users");
+                i.HasKey(x => x.Id);
+            });
+            modelBuilder.Entity<IntRole>(i =>
+            {
+                i.ToTable("Role");
+                i.HasKey(x => x.Id);
+            });
+            modelBuilder.Entity<IdentityUserRole<int>>(i =>
+            {
+                i.ToTable("UserRole");
+                i.HasKey(x => new { x.RoleId, x.UserId });
+            });
+            modelBuilder.Entity<IdentityUserLogin<int>>(i =>
+            {
+                i.ToTable("UserLogin");
+                i.HasKey(x => new { x.ProviderKey, x.LoginProvider });
+            });
+            modelBuilder.Entity<IdentityRoleClaim<int>>(i =>
+            {
+                i.ToTable("RoleClaims");
+                i.HasKey(x => x.Id);
+            });
+            modelBuilder.Entity<IdentityUserClaim<int>>(i =>
+            {
+                i.ToTable("UserClaims");
+                i.HasKey(x => x.Id);
             });
 
-            modelBuilder.Entity<User>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
 
-            modelBuilder.Entity<Customer>()
-                .HasIndex(c => c.PhoneNumber)
-                .IsUnique();
 
             modelBuilder.Entity<Product>(c =>
             {

@@ -4,6 +4,7 @@ using Moq;
 using System;
 using System.Linq;
 using WebStore.Controllers;
+using WebStore.Tests.FakeClasses;
 using WebStore.ViewModels.ProductViewModels;
 using Xunit;
 using Type = WebStore.Models.Type;

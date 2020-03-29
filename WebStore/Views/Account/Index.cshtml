@@ -4,7 +4,7 @@
 }
 
 
-<link rel="stylesheet" type="text/css" href="~/css/Customer/index.css"/>
+<link rel="stylesheet" type="text/css" href="~/css/Customer/index.css" />
 
 
 <h1 class="display-3">Baza klientów</h1>
@@ -15,24 +15,27 @@
 
 <table class="table table-hover">
     <thead>
-    <tr>
-        <th scope="col">Imię i Nazwisko</th>
-        <th scope="col">Login</th>
-        <th scope="col">Edycja</th>
-        <th scope="col">Usuń</th>
-    </tr>
+        <tr>
+            <th scope="col">Imię i Nazwisko</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Edycja</th>
+            <th scope="col">Usuń</th>
+        </tr>
     </thead>
     <tbody>
-    @foreach (var user in Model)
-    {
+        @foreach (var user in Model)
+        {
 
-        <tr id ="@user.UserName">
-            <td>@Html.ActionLink(@user.FirstName + " " + @user.LastName,
-                    "Details", "Customer", new {username = user.UserName})</td>
+            <tr id="@user.UserName">
+                <td>
+                    @Html.ActionLink(@user.FirstName + " " + @user.LastName,
+                    "Details", "Account", new { Id = user.Id})
+                </td>
             <td>@user.UserName</td>
             <td>
-                @Html.ActionLink("Edytuj", "CustomerForm",
-                    "Customer", new {username = user.UserName})</td>
+                @Html.ActionLink("Edytuj", "UserForm",
+                    "Account", new { Id = user.Id })
+            </td>
             <td>
                 <button data-user-username="@user.UserName" type="button" class="btn btn-danger btn-sm js-delete-user">Usuń</button>
             </td>
@@ -44,8 +47,8 @@
 
 
 @section scripts
-{ 
-    
+{
+
     <script>
 
         $(document).ready(function() {

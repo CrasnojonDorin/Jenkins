@@ -47,8 +47,11 @@ namespace WebStore
 
 
             //Konfiguracja Identity
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<StoreContext>();
+            services.AddIdentity<User, IntRole>()
+                .AddEntityFrameworkStores<StoreContext>()
+                .AddDefaultTokenProviders();
+
+
 
             //Konfiguracja wymagañ co do has³a
             services.Configure<IdentityOptions>(options =>
