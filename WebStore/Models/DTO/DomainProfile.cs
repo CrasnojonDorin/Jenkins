@@ -12,8 +12,9 @@ namespace WebStore.Models.DTO
             CreateMap<UserFormViewModel, User>();
             CreateMap<UserDTO, User>();
             CreateMap<User, UserDTO>();
+            CreateMap<UserSaveDTO, User>();
+            CreateMap<User, UserSaveDTO>();
             CreateMap<Product, ProductDTO>();
-
         }
     }
 }

@@ -26,7 +26,7 @@
         @foreach (var user in Model)
         {
 
-            <tr id="@user.UserName">
+            <tr id="@user.Id">
                 <td>
                     @Html.ActionLink(@user.FirstName + " " + @user.LastName,
                     "Details", "Account", new { Id = user.Id})
@@ -37,7 +37,7 @@
                     "Account", new { Id = user.Id })
             </td>
             <td>
-                <button data-user-username="@user.UserName" type="button" class="btn btn-danger btn-sm js-delete-user">Usuń</button>
+                <button data-user-id="@user.Id" type="button" class="btn btn-danger btn-sm js-delete-user">Usuń</button>
             </td>
         </tr>
     }
@@ -54,12 +54,12 @@
         $(document).ready(function() {
             $(".js-delete-user").click(function(e) {
                 var button = $(e.target);
-                var username = button.attr("data-user-username");
+                var id = button.attr("data-user-id");
                 $.ajax({
-                    url: '/api/account/'.concat(username),
+                    url: '/api/account/'.concat(id),
                     type: 'DELETE',
                     success: function (response) {
-                        $("#".concat(username)).fadeOut();
+                        $("#".concat(id)).fadeOut();
                     }
                 });
             });

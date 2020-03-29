@@ -2,7 +2,7 @@
 
 namespace WebStore.Models.DTO
 {
-    public class UserDTO
+    public class UserSaveDTO
     {
         [Display(Name = "Imię")]
         [MaxLength(25)]
@@ -19,10 +19,13 @@ namespace WebStore.Models.DTO
         public string Email { get; set; }
 
         [Required]
-        [DataType(DataType.PhoneNumber)]
-        public string PhoneNumber { get; set; }
+        public string Password { get; set; }
 
         [Required]
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
+        
+        [Required] 
         public int GenderId { get; set; }
     }
 }

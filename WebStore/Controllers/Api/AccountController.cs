@@ -1,6 +1,7 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 using WebStore.Models;
 using WebStore.Models.DTO;
 
@@ -25,17 +26,18 @@ namespace WebStore.Controllers.Api
         [HttpGet]
         public IActionResult Get()
         {
-            var users = _context.Users.ToList();
+            var usersInDb = _context.Users.ToList();
+            var users = _mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(usersInDb);
 
             return Ok(users);
         }
 
 
         [HttpGet]
-        [Route("{username:alpha}")]
-        public IActionResult GetUser([FromRoute] string username)
+        [Route("{id:int}")]
+        public IActionResult GetUser([FromRoute] int id)
         {
-            var userInDb = _context.Users.SingleOrDefault(c => c.UserName.Equals(username));
+            var userInDb = _context.Users.SingleOrDefault(c => c.Id.Equals(id));
 
 
             if (userInDb == null)
@@ -45,28 +47,28 @@ namespace WebStore.Controllers.Api
         }
 
 
-        //[HttpPost]
-        //public IActionResult Post([FromBody] UserDTO userDTO)
-        //{
-        //    if (userDTO== null)
-        //    {
-        //        return Conflict("Nie można dodać klienta");
-        //    }
+        [HttpPost]
+        public IActionResult Post([FromBody] UserSaveDTO userCreateDto)
+        {
+            if (userCreateDto == null)
+            {
+                return Conflict("Nie można dodać klienta");
+            }
 
-        //    var user = _mapper.Map<UserDTO, User>(userDTO);
+            var user = _mapper.Map<UserSaveDTO, User>(userCreateDto);
 
-        //    _context.Users.Add(user);
-        //    _context.SaveChanges();
+            _context.Users.Add(user);
+            _context.SaveChanges();
 
-        //    return Ok();
-        //}
+            return Ok();
+        }
 
 
         [HttpDelete]
-        [Route("{username:alpha}")]
-        public IActionResult Delete([FromRoute] string username)
+        [Route("{id:int}")]
+        public IActionResult Delete([FromRoute] int id)
         {
-            var userInDb = _context.Users.SingleOrDefault(x => x.UserName.Equals(username));
+            var userInDb = _context.Users.SingleOrDefault(x => x.Id.Equals(id));
 
             if (userInDb == null)
             {

@@ -158,18 +158,6 @@ namespace WebStore.Controllers
             return View(user);
         }
 
-        [HttpGet]
-        public IActionResult UserForm()
-        {
-
-            var viewModel = new UserFormViewModel
-            {
-                Genders = _context.Genders
-            };
-
-            return View(viewModel);
-        }
-
 
         /// <summary>
         /// Edycja użytkownika
