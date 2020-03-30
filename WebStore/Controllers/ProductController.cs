@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,13 +16,15 @@ namespace WebStore.Controllers
     public class ProductController : Controller
     {
         private readonly StoreContext _context;
+        private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _hostEnvironment;
 
 
-        public ProductController(StoreContext storeContext, IWebHostEnvironment hostEnvironment)
+        public ProductController(StoreContext storeContext, IWebHostEnvironment hostEnvironment, IMapper mapper)
         {
             _context = storeContext;
             _hostEnvironment = hostEnvironment;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -40,23 +43,9 @@ namespace WebStore.Controllers
             return View(products);
         }
 
-        [HttpGet]
-        public IActionResult Details(int id)
-        {
-            var product = _context.Products
-                .Include(p => p.Brand)
-                .Include(u => u.Color)
-                .Include(u => u.Sex)
-                .Include(u => u.Size)
-                .Include(u => u.Type)
-                .Single(p => p.Id.Equals(id));
-
-
-            return View(product);
-        }
         
         [HttpGet]
-        public IActionResult ProductForm()
+        public IActionResult AddProduct()
         {
 
             var productFormViewModel = new ProductFormViewModel
@@ -69,36 +58,36 @@ namespace WebStore.Controllers
                 ClothSizes = _context.Sizes.Where(x=>x.TypeId.Equals(2)).ToList()
             };
 
-            return View("Forms/ProductForm",productFormViewModel);
+            return View("Forms/AddProduct",productFormViewModel);
         }
         
         [HttpGet]
-        public IActionResult ColorForm()
+        public IActionResult AddColor()
         {
-            return View("Forms/ColorForm", new ColorFormViewModel{Colors = _context.Colors.ToList()});
+            return View("Forms/AddColor", new ColorFormViewModel{Colors = _context.Colors.ToList()});
         }
        
         [HttpGet]
-        public IActionResult TypeForm()
+        public IActionResult AddType()
         {
-            return View("Forms/TypeForm",new Type());
+            return View("Forms/AddType",new Type());
         }
        
         [HttpGet]
-        public IActionResult SizeForm()
+        public IActionResult AddSize()
         {
-            return View("Forms/SizeForm",new SizeFormViewModel {Types = _context.Types.ToList()});
+            return View("Forms/AddSize",new SizeFormViewModel {Types = _context.Types.ToList()});
         }
         
         [HttpGet]
-        public IActionResult BrandForm()
+        public IActionResult AddBrand()
         {
-            return View("Forms/BrandForm", new BrandFormViewModel {Products = _context.Products.ToList()});
+            return View("Forms/AddBrand", new BrandFormViewModel {Products = _context.Products.ToList()});
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult ProductForm(ProductFormViewModel model)
+        public IActionResult AddProduct(ProductFormViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -130,7 +119,7 @@ namespace WebStore.Controllers
                 _context.SaveChanges();
 
 
-                return RedirectToAction("ProductForm");
+                return RedirectToAction("AddProduct");
             }
 
             var viewModel = new ProductFormViewModel
@@ -151,13 +140,42 @@ namespace WebStore.Controllers
                 ClothSizes = _context.Sizes.Where(x=>x.TypeId.Equals(2)).ToList()
             };
 
-            return View("Forms/ProductForm", viewModel);
+            return View("Forms/AddProduct", viewModel);
 
         }
 
+        [HttpGet]
+        public IActionResult EditProduct(int id)
+        {
+            var productInDb = _context.Products.FirstOrDefault(x=>x.Id.Equals(id));
+
+            if (productInDb == null)
+            {
+                return NotFound();
+            }
+
+
+            var viewModel = new ProductFormViewModel();
+            _mapper.Map(productInDb, viewModel);
+
+
+            viewModel.Types = _context.Types.ToList();
+            viewModel.Brands = _context.Brands.ToList();
+            viewModel.Colors = _context.Colors.ToList();
+            viewModel.Sexes = _context.Sexes.ToList();
+            viewModel.ShoeSizes = _context.Sizes.Where(x => x.TypeId.Equals(1)).ToList();
+            viewModel.ClothSizes = _context.Sizes.Where(x => x.TypeId.Equals(2)).ToList();
+
+
+
+            return View("Forms/AddProduct", viewModel);
+
+        }
+
+
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult BrandForm(BrandFormViewModel model)
+        public IActionResult AddBrand(BrandFormViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -182,7 +200,7 @@ namespace WebStore.Controllers
                 _context.Brands.Add(brand);
                 _context.SaveChanges();
 
-                return RedirectToAction("BrandForm");
+                return RedirectToAction("AddBrand");
             }
 
             var viewModel = new BrandFormViewModel
@@ -193,12 +211,12 @@ namespace WebStore.Controllers
 
 
 
-            return View("Forms/BrandForm", viewModel);
+            return View("Forms/AddBrand", viewModel);
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult TypeForm(Type model)
+        public IActionResult AddType(Type model)
         {
             if (ModelState.IsValid)
             {
@@ -209,18 +227,18 @@ namespace WebStore.Controllers
                 _context.Types.Add(type);
                 _context.SaveChanges();
 
-                return RedirectToAction("TypeForm");
+                return RedirectToAction("AddType");
 
             }
 
             var viewModel = new Type {Name = model.Name};
 
-            return View("Forms/TypeForm",viewModel);
+            return View("Forms/AddType",viewModel);
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult SizeForm(SizeFormViewModel model)
+        public IActionResult AddSize(SizeFormViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -233,7 +251,7 @@ namespace WebStore.Controllers
                 _context.Sizes.Add(size);
                 _context.SaveChanges();
 
-                return RedirectToAction("SizeForm");
+                return RedirectToAction("AddSize");
             }
 
             var viewModel = new SizeFormViewModel
@@ -242,12 +260,12 @@ namespace WebStore.Controllers
                 Types = _context.Types.ToList()
             };
 
-            return View("Forms/SizeForm", viewModel);
+            return View("Forms/AddSize", viewModel);
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult ColorForm(ColorFormViewModel model)
+        public IActionResult AddColor(ColorFormViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -259,7 +277,7 @@ namespace WebStore.Controllers
                 _context.Colors.Add(color);
                 _context.SaveChanges();
 
-                return RedirectToAction("ColorForm");
+                return RedirectToAction("AddColor");
             }
             
 
@@ -268,7 +286,7 @@ namespace WebStore.Controllers
                 Name = model.Name,
                 Colors = _context.Colors.ToList()
             };
-            return View("Forms/ColorForm", viewModel);
+            return View("Forms/AddColor", viewModel);
         }
 
     }

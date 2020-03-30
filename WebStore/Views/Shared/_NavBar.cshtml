@@ -1,7 +1,7 @@
 ﻿@inject SignInManager<User> signInManager
 
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" >
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebStore</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -14,75 +14,211 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Strona Główna</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Sklep</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Index">Sklep</a>
                     </li>
-                    
+
 
                     <li class="nav-item dropdown text-dark">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Zarządzaj bazą danych
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="ProductForm">Dodaj produkt</a>
-                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="BrandForm">Dodaj brand</a>
-                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="ColorForm">Dodaj kolor</a>
-                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="SizeForm">Dodaj rozmiar</a>
-                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="TypeForm">Dodaj typ</a>
-                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Account" asp-action="Index">Lista klientów</a>
-
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Administration" asp-action="ListRoles">Lista ról</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="/swagger" class="nav-link text-dark">Swagger</a>
-                    </li>
-                    
-                    
-
-                </ul>
-
-                <ul class="navbar-nav mr-auto">
-
-                    @if (signInManager.IsSignedIn(User))
-                    {
-
-                        <li class="nav-item dropdown text-dark">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @User.Identity.Name
+                                Zarządzaj
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="" asp-action="">Mój profil</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="" asp-action="">Historia zamówień</a>
+                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Administration" asp-action="Index">Użytkownikami</a>
+                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Administration" asp-action="ListRoles">Rolami</a>
 
                                 <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="Index">Produktami</a>
+                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="AddBrand">Dodaj brand</a>
+                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="AddColor">Dodaj kolor</a>
+                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="AddProduct">Dodaj produkt</a>
+                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="AddSize">Dodaj rozmiar</a>
+                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Product" asp-action="AddType">Dodaj typ</a>
 
-                                <form class="nav-link text-dark" method="post" asp-action="Logout" asp-controller="Account">
-                                    <button type="submit" class="nav-link btn btn-link py-0 dropdown-item text-dark">
-                                        Wyloguj
-                                    </button>
-                                </form>
+
 
                             </div>
                         </li>
 
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Zaloguj</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Zarejestruj</a>
-                        </li>
-                    }
 
-                   
 
-                </ul>
-            </div>
+             
+
+            <li class="nav-item">
+                <a href="/swagger" class="nav-link text-dark">Swagger</a>
+            </li>
+
+
+
+            </ul>
+
+            <ul class="navbar-nav mr-auto">
+
+                @if (signInManager.IsSignedIn(User))
+                {
+
+                    <li class="nav-item dropdown text-dark">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @User.Identity.Name
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Account" asp-action="MyProfile">Mój profil</a>
+                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Account" asp-action="OrdersHistrory">Historia zamówień</a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <form class="nav-link text-dark" method="post" asp-action="Logout" asp-controller="Account">
+                                <button type="submit" class="nav-link btn btn-link py-0 dropdown-item text-dark">
+                                    Wyloguj
+                                </button>
+                            </form>
+
+                        </div>
+                    </li>
+
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Zaloguj</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Zarejestruj</a>
+                    </li>
+                }
+
+
+
+            </ul>
+        </div>
         </div>
     </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </header>
+
+
+
+
+
+
+
+
+
+<script>
+    $(function () {
+        $('#main_navbar').bootnavbar({
+            //option
+            //animation: false
+        });
+    })
+</script>
+
+<style>
+    .dropdown-menu {
+        margin-top: 0;
+    }
+
+        .dropdown-menu .dropdown-toggle::after {
+            vertical-align: middle;
+            border-left: 4px solid;
+            border-bottom: 4px solid transparent;
+            border-top: 4px solid transparent;
+        }
+
+        .dropdown-menu .dropdown .dropdown-menu {
+            left: 100%;
+            top: 0%;
+            margin: 0 20px;
+            border-width: 0;
+        }
+
+            .dropdown-menu .dropdown .dropdown-menu.left {
+                right: 100%;
+                left: auto;
+            }
+
+        .dropdown-menu > li a:hover,
+        .dropdown-menu > li.show {
+            background: #007bff;
+            color: white;
+        }
+
+            .dropdown-menu > li.show > a {
+                color: white;
+            }
+
+    @@media (min-width: 768px) {
+        .dropdown-menu .dropdown .dropdown-menu {
+            margin: 0;
+            border-width: 1px;
+        }
+    }
+</style>
+
+
+
+<script>
+
+    (function($) {
+        var defaults={
+            sm : 540,
+            md : 720,
+            lg : 960,
+            xl : 1140,
+            navbar_expand: 'lg',
+            animation: true,
+            animateIn: 'fadeIn',
+        };
+        $.fn.bootnavbar = function(options) {
+
+            var screen_width = $(document).width();
+            settings = $.extend(defaults, options);
+
+            if(screen_width >= settings.lg){
+                $(this).find('.dropdown').hover(function() {
+                    $(this).addClass('show');
+                    $(this).find('.dropdown-menu').first().addClass('show');
+                    if(settings.animation){
+                        $(this).find('.dropdown-menu').first().addClass('animated ' + settings.animateIn);
+                    }
+                }, function() {
+                    $(this).removeClass('show');
+                    $(this).find('.dropdown-menu').first().removeClass('show');
+                });
+            }
+
+            $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+                if (!$(this).next().hasClass('show')) {
+                    $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+                }
+                var $subMenu = $(this).next(".dropdown-menu");
+                $subMenu.toggleClass('show');
+
+                $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+                    $('.dropdown-submenu .show').removeClass("show");
+                });
+
+                return false;
+            });
+        };
+    })(jQuery);
+
+</script>
+

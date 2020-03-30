@@ -20,6 +20,7 @@ namespace WebStore.ViewModels
         public string Email { get; set; }
 
         [Required]
+        [Display(Name = "Login")]
         [MinLength(5)]
         [MaxLength(15)]
         public string UserName { get; set; }

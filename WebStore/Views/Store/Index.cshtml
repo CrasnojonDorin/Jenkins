@@ -8,7 +8,7 @@
 </head>
 
 
-<h1 class="display-4">Zarządzaj produktami</h1>
+<h1 class="display-4">Przed Tobą cały nasz asortyment!</h1>
 
 <hr />
 <br />
@@ -17,7 +17,7 @@
     <div class="row">
         @foreach (var product in Model)
         {
-            <div class="col-md-4" id ="delete-button-@product.Id">
+            <div class="col-md-4" id="delete-button-@product.Id">
                 <div class="custom-div">
                     <img src="images/@product.PhotoPath" class="product-image">
                     <p>@product.Brand.Name @Html.DisplayText(" ") @product.Name</p>
@@ -35,15 +35,15 @@
                         <div class="row">
 
                             <div class=" col-md-6">
-                                <div class="row justify-content-md-center">
-                                    <button data-product-id="@product.Id" type="button" class="btn btn-danger btn-sm js-delete-product col-md-4">Usuń</button>
-                                </div>
+                                <button asp-action="@*AddToBasket*@" type="button" class="btn btn-primary btn-sm">
+                                    Dodaj do koszyka
+                                </button>
                             </div>
 
                             <div class="col-md-6">
-                                <button type="button" class="btn btn-primary btn-sm" 
-                                        onclick="location.href = '@Url.Action("EditProduct", "Product",new{product.Id})'">
-                                    Edytuj
+                                <button type="button" class="btn btn-primary btn-sm"
+                                        onclick="location.href = '@Url.Action("Details", "Store",new{product.Id})'">
+                                    Zobacz szczegóły
                                 </button>
                             </div>
                         </div>
@@ -54,31 +54,6 @@
     </div>
 
 </div>
-
-@section scripts
-{
-
-    <script>
-
-        $(document).ready(function() {
-            $(".js-delete-product").click(function(e) {
-                var button = $(e.target);
-                var id = button.attr("data-product-id");
-                $.ajax({
-                    url: '/api/product/'.concat(id),
-                    type: 'DELETE',
-                    success: function (response) {
-                        $("#delete-button-".concat(id)).fadeOut();
-                    }
-                });
-            });
-        });
-
-
-    </script>
-
-}
-
 
 
 

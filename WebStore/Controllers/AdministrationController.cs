@@ -1,6 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using WebStore.Models;
 using WebStore.ViewModels;
@@ -12,18 +18,27 @@ namespace WebStore.Controllers
 
         private readonly RoleManager<Role> _roleManager;
         private readonly UserManager<User> _userManager;
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IMapper _mapper;
+
         private readonly StoreContext _context;
 
-        public AdministrationController(RoleManager<Role> roleManager, UserManager<User> userManager, StoreContext context)
+        public AdministrationController(RoleManager<Role> roleManager, UserManager<User> userManager, StoreContext context,
+            IWebHostEnvironment hostEnvironment, IMapper mapper)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _hostEnvironment = hostEnvironment;
+            _mapper = mapper;
             _context = context;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var users = await _context.Users.ToListAsync();
+
+            return View(users);
         }
 
         [HttpGet]
@@ -212,7 +227,7 @@ namespace WebStore.Controllers
         /// <param name="user"></param>
         /// <param name="roleName"></param>
         /// <returns></returns>
-        public async Task<bool> IsInRoleAsync(User user, string roleName)
+        private async Task<bool> IsInRoleAsync(User user, string roleName)
         {
             var usersInRole = await _userManager.GetUsersInRoleAsync(roleName);
 
@@ -235,7 +250,7 @@ namespace WebStore.Controllers
         /// <param name="user"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public async Task<bool> DeleteRoleAsync(User user, int roleId)
+        private async Task<bool> DeleteRoleAsync(User user, int roleId)
         {
 
             var userRole = new IdentityUserRole<int>
@@ -250,6 +265,100 @@ namespace WebStore.Controllers
 
             return true;
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var user = await _context.Users
+                .Include(u => u.Gender)
+                .SingleAsync(x => x.Id.Equals(id));
+
+
+            return View(user);
+        }
+
+
+        /// <summary>
+        /// Edycja użytkownika
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> EditUser(int id)
+        {
+            var user = await _context.Users
+                .Include(x => x.Gender)
+                .SingleOrDefaultAsync(x => x.Id.Equals(id));
+
+            if (user == null)
+                return NotFound();
+
+            var viewModel = new UserFormViewModel
+            {
+                Genders = _context.Genders.ToList(),
+                GenderId = user.GenderId,
+                PhoneNumber = user.PhoneNumber,
+                Town = user.Town,
+                Id = user.Id,
+                LastName = user.LastName,
+                FirstName = user.FirstName,
+            };
+
+            return View("EditUser", viewModel);
+        }
+
+
+        /// <summary>
+        /// Aktualizuje informacje o użytkowniku
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditUser(UserFormViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                string uniqueFileName = null;
+
+                if (model.Photo != null)
+                {
+                    string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "images");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    await model.Photo.CopyToAsync(new FileStream(filePath, FileMode.Create));
+                }
+
+
+                var user = _userManager.FindByIdAsync(model.Id.ToString()).Result;
+
+                //za pomocą mappera można skrócić cały kod niżej do jedenj linijki
+                _mapper.Map(model, user);
+
+
+                await _userManager.UpdateAsync(user);
+
+                _context.SaveChanges();
+
+                return RedirectToAction("Index", "Administration");
+            }
+
+            var viewModel = new UserFormViewModel
+            {
+                Genders = _context.Genders.ToList(),
+                GenderId = model.GenderId,
+                PhoneNumber = model.PhoneNumber,
+                Town = model.Town,
+                Id = model.Id,
+                LastName = model.LastName,
+                FirstName = model.FirstName
+            };
+
+            return View("EditUser", viewModel);
+        }
+
 
     }
 }

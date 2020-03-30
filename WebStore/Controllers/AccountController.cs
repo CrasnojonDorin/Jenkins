@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WebStore.Models;
@@ -20,7 +18,6 @@ namespace WebStore.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly IWebHostEnvironment _hostEnvironment;
 
 
         public AccountController(StoreContext context, 
@@ -29,7 +26,6 @@ namespace WebStore.Controllers
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
-            _hostEnvironment = hostEnvironment;
             _mapper = mapper;
         }
 
@@ -60,7 +56,7 @@ namespace WebStore.Controllers
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Login(string returnUrl,LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -143,108 +139,39 @@ namespace WebStore.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> MyProfile()
         {
-            var users = await _context.Users.ToListAsync();
+             _signInManager.IsSignedIn(User);
 
-            return View(users);
-        }
+             var userName = User.Identity.Name;
 
+             var userInDb = await _userManager.FindByNameAsync(userName);
 
-        [HttpGet]
-        public async Task<IActionResult> Details(int id)
-        {
             var user = await _context.Users
                 .Include(u => u.Gender)
-                .SingleAsync(x => x.Id.Equals(id));
+                .SingleAsync(x => x.Id.Equals(userInDb.Id));
 
 
             return View(user);
         }
 
 
-        /// <summary>
-        /// Edycja użytkownika
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> UserForm(int id)
+        public async Task<IActionResult> OrdersHistrory()
         {
+            _signInManager.IsSignedIn(User);
+
+            var userName = User.Identity.Name;
+
+            var userInDb = await _userManager.FindByNameAsync(userName);
+
             var user = await _context.Users
-                .Include(x=>x.Gender)
-                .SingleOrDefaultAsync(x => x.Id.Equals(id));
+                .Include(u => u.Gender)
+                .SingleAsync(x => x.Id.Equals(userInDb.Id));
 
-            if (user == null)
-                return NotFound();
 
-            var viewModel = new UserFormViewModel
-            {
-                Genders = _context.Genders.ToList(),
-                GenderId = user.GenderId,
-                PhoneNumber = user.PhoneNumber,
-                Town = user.Town,
-                Id = user.Id,
-                LastName = user.LastName,
-                FirstName = user.FirstName,
-            };
-
-            return View("UserForm", viewModel);
+            return View(user);
         }
 
-
-        /// <summary>
-        /// Aktualizuje informacje o użytkowniku
-        /// </summary>
-        /// <param name="customer"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UserForm(UserFormViewModel model)
-        {
-
-            if (ModelState.IsValid)
-            {
-                string uniqueFileName = null;
-
-                if (model.Photo != null)
-                {
-                    string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "images");
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    await model.Photo.CopyToAsync(new FileStream(filePath, FileMode.Create));
-                }
-
-
-                var user = _userManager.FindByIdAsync(model.Id.ToString()).Result;
-
-                //za pomocą mappera można skrócić cały kod niżej do jedenj linijki
-                _mapper.Map(model, user);
-
-
-                await _userManager.UpdateAsync(user);
-
-                _context.SaveChanges();
-
-                return RedirectToAction("Index", "Account");
-            }
-
-            var viewModel = new UserFormViewModel
-            {
-                Genders = _context.Genders.ToList(),
-                GenderId = model.GenderId,
-                PhoneNumber = model.PhoneNumber,
-                Town = model.Town,
-                Id = model.Id,
-                LastName = model.LastName,
-                FirstName = model.FirstName
-            };
-
-            return View("UserForm", viewModel);
-        }
-
-
-        
     }
 }

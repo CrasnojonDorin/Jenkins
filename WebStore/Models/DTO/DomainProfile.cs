@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using WebStore.ViewModels;
+using WebStore.ViewModels.ProductViewModels;
 
 namespace WebStore.Models.DTO
 {
@@ -15,6 +16,10 @@ namespace WebStore.Models.DTO
             CreateMap<UserSaveDTO, User>();
             CreateMap<User, UserSaveDTO>();
             CreateMap<Product, ProductDTO>();
+            CreateMap<Product, ProductFormViewModel>();
+            CreateMap<ProductFormViewModel, Product>();
+
+
         }
     }
 }

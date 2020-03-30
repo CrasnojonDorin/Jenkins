@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
 using System.Linq;
 using WebStore.Controllers;
+using WebStore.Models.DTO;
 using WebStore.Tests.FakeClasses;
 using WebStore.ViewModels.ProductViewModels;
 using Xunit;
@@ -15,10 +16,19 @@ namespace WebStore.Tests.Controller
     {
         private readonly ProductController _sut;
 
+        private IMapper _mapper;
+        private DomainProfile domainProfile;
+        private MapperConfiguration configuration;
+
         public ProductControllerShould()
         {
             var mockIWebHostEnvironment = new Mock<IWebHostEnvironment>();
-            _sut = new ProductController(_context, mockIWebHostEnvironment.Object);
+
+            //mapper configuration
+            domainProfile = new DomainProfile();
+            configuration = new MapperConfiguration(x => x.AddProfile(domainProfile));
+            _mapper = new Mapper(configuration);
+            _sut = new ProductController(_context, mockIWebHostEnvironment.Object, _mapper);
         }
 
         [Fact]
@@ -31,25 +41,13 @@ namespace WebStore.Tests.Controller
             Assert.IsType<ViewResult>(result);
         }
 
-        [Fact]
-        public void ReturnViewForDetailsIfElementExist()
-        {
-            //Arrange
-            var random = new Random();
-            
-            //Act
-            IActionResult result = _sut.Details(random.Next(100,102));
 
-            //Assert
-            Assert.IsType<ViewResult>(result);
-        }
-
-        //ProductForm Tests
+        //AddProduct Tests
         [Fact]
         public void ReturnViewForProductForm()
         {
             //Act
-            IActionResult result = _sut.ProductForm();
+            IActionResult result = _sut.AddProduct();
 
             //Assert
             Assert.IsType<ViewResult>(result);
@@ -65,7 +63,7 @@ namespace WebStore.Tests.Controller
                 SexId = 1, SizeId = 2, TypeId = 2, Price = 9.99};
 
             //Act
-            IActionResult result = _sut.ProductForm(productViewModel);
+            IActionResult result = _sut.AddProduct(productViewModel);
 
             //Assert
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -88,7 +86,7 @@ namespace WebStore.Tests.Controller
             var productViewModel = new ProductFormViewModel {Name = "NoSaveTest", Price = 20.00,BrandId = 1,ColorId = 1,SexId = 1,SizeId = 1,TypeId = 1,Description = "NoSaveTest"};
 
             //Act
-            _sut.ProductForm(productViewModel);
+            _sut.AddProduct(productViewModel);
             var result = _context.Products.FirstOrDefault(x => x.Name.Equals("NoSaveTest"));
 
             //Assert
@@ -103,7 +101,7 @@ namespace WebStore.Tests.Controller
             var productViewModel = new ProductFormViewModel() { Name = "SaveTest", Price = 20.00, BrandId = 1, ColorId = 1, SexId = 1, SizeId = 1, TypeId = 1, Description = "SaveTest" };
 
             //Act
-            _sut.ProductForm(productViewModel);
+            _sut.AddProduct(productViewModel);
             var savedType = _context.Products.FirstOrDefault(x => x.Name.Equals("SaveTest"));
 
 
@@ -119,19 +117,19 @@ namespace WebStore.Tests.Controller
             var productViewModel = new ProductFormViewModel() { Name = "SaveTest", Price = 20.00, BrandId = 1, ColorId = 1, SexId = 1, SizeId = 1, TypeId = 1, Description = "SaveTest"};
 
             //Act
-            var result = _sut.ProductForm(productViewModel);
+            var result = _sut.AddProduct(productViewModel);
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
 
             //Assert
-            Assert.Equal("ProductForm", redirectToActionResult.ActionName);
+            Assert.Equal("AddProduct", redirectToActionResult.ActionName);
         }
 
-        //TypeForm Tests
+        //AddType Tests
         [Fact]
         public void ReturnViewForTypeForm()
         {
             //Act
-            IActionResult result = _sut.TypeForm();
+            IActionResult result = _sut.AddType();
 
             //Assert
             Assert.IsType<ViewResult>(result);
@@ -149,7 +147,7 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            IActionResult result = _sut.TypeForm(type);
+            IActionResult result = _sut.AddType(type);
 
             //Assert
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -170,7 +168,7 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            _sut.TypeForm(type);
+            _sut.AddType(type);
             var result = _context.Types.FirstOrDefault(x => x.Name.Equals("NoSaveTest"));
 
             //Assert
@@ -188,7 +186,7 @@ namespace WebStore.Tests.Controller
             };
             
             //Act
-            _sut.TypeForm(type);
+            _sut.AddType(type);
             var savedType = _context.Types.FirstOrDefault(x => x.Name.Equals("TestSave"));
 
 
@@ -207,11 +205,11 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            var result = _sut.TypeForm(type);
+            var result = _sut.AddType(type);
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
 
             //Assert
-            Assert.Equal("TypeForm", redirectToActionResult.ActionName);
+            Assert.Equal("AddType", redirectToActionResult.ActionName);
         }
 
         //ColorFormTests
@@ -220,7 +218,7 @@ namespace WebStore.Tests.Controller
         public void ReturnViewForColorForm()
         {
             //Act
-            IActionResult result = _sut.ColorForm();
+            IActionResult result = _sut.AddColor();
 
             //Assert
             Assert.IsType<ViewResult>(result);
@@ -238,7 +236,7 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            IActionResult result = _sut.ColorForm(colorViewModel);
+            IActionResult result = _sut.AddColor(colorViewModel);
 
             //Assert
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -258,7 +256,7 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            _sut.ColorForm(colorViewModel);
+            _sut.AddColor(colorViewModel);
             var result = _context.Colors.FirstOrDefault(x => x.Name.Equals("NoSaveTest"));
 
             //Assert
@@ -276,7 +274,7 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            _sut.ColorForm(colorViewModel);
+            _sut.AddColor(colorViewModel);
             var savedType = _context.Colors.FirstOrDefault(x => x.Name.Equals("TestSave"));
 
 
@@ -295,11 +293,11 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            var result = _sut.ColorForm(colorViewModel);
+            var result = _sut.AddColor(colorViewModel);
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
 
             //Assert
-            Assert.Equal("ColorForm", redirectToActionResult.ActionName);
+            Assert.Equal("AddColor", redirectToActionResult.ActionName);
         }
 
         //BrandFormTests
@@ -307,7 +305,7 @@ namespace WebStore.Tests.Controller
         public void ReturnViewForBrandForm()
         {
             //Act
-            IActionResult result = _sut.BrandForm();
+            IActionResult result = _sut.AddBrand();
 
             //Assert
             Assert.IsType<ViewResult>(result);
@@ -326,7 +324,7 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            IActionResult result = _sut.BrandForm(brandViewModel);
+            IActionResult result = _sut.AddBrand(brandViewModel);
 
             //Assert
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -347,7 +345,7 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            _sut.BrandForm(brandViewModel);
+            _sut.AddBrand(brandViewModel);
             var result = _context.Brands.FirstOrDefault(x => x.Name.Equals("NoSaveTest"));
 
             //Assert
@@ -366,7 +364,7 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            _sut.BrandForm(brandViewModel);
+            _sut.AddBrand(brandViewModel);
             var savedType = _context.Brands.FirstOrDefault(x => x.Name.Equals("TestSave"));
 
 
@@ -386,11 +384,11 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            var result = _sut.BrandForm(brandViewModel);
+            var result = _sut.AddBrand(brandViewModel);
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
 
             //Assert
-            Assert.Equal("BrandForm", redirectToActionResult.ActionName);
+            Assert.Equal("AddBrand", redirectToActionResult.ActionName);
         }
 
 
@@ -399,7 +397,7 @@ namespace WebStore.Tests.Controller
         public void ReturnViewForSizeForm()
         {
             //Act
-            IActionResult result = _sut.SizeForm();
+            IActionResult result = _sut.AddSize();
 
             //Assert
             Assert.IsType<ViewResult>(result);
@@ -418,7 +416,7 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            IActionResult result = _sut.SizeForm(sizeViewModel);
+            IActionResult result = _sut.AddSize(sizeViewModel);
 
             //Assert
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -439,7 +437,7 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            _sut.SizeForm(sizeViewModel);
+            _sut.AddSize(sizeViewModel);
             var result = _context.Sizes.FirstOrDefault(x => x.Name.Equals("NoSaveTest"));
 
             //Assert
@@ -458,7 +456,7 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            _sut.SizeForm(sizeViewModel);
+            _sut.AddSize(sizeViewModel);
             var savedType = _context.Sizes.FirstOrDefault(x => x.Name.Equals("TestSave"));
 
 
@@ -478,11 +476,11 @@ namespace WebStore.Tests.Controller
             };
 
             //Act
-            var result = _sut.SizeForm(sizeViewModel);
+            var result = _sut.AddSize(sizeViewModel);
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
 
             //Assert
-            Assert.Equal("SizeForm", redirectToActionResult.ActionName);
+            Assert.Equal("AddSize", redirectToActionResult.ActionName);
         }
 
 
