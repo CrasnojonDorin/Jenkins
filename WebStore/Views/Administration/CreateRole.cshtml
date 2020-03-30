@@ -1,0 +1,37 @@
+﻿@model WebStore.ViewModels.CreateRoleViewModel
+@{
+    ViewData["Title"] = "Stwórz nową rolę";
+}
+
+<h1>Stwórz nową rolę</h1>
+
+<hr />
+<br />
+
+
+@using (Html.BeginForm("CreateRole", "Administration"))
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.ValidationSummary()
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(u => u.RoleName)
+        @Html.TextBoxFor(u => u.RoleName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(u => u.RoleName)
+    </div>
+
+    <button type="submit" class="btn btn-primary">Stwórz nową rolę</button>
+
+
+
+}
+<br />
+<br />
+<br />
+
+<a class="btn btn-info mb-3"
+   asp-controller="Administration" asp-action="ListRoles">
+    Lista istniejących roli
+</a>

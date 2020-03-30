@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebStore.Models
 {
-    public class StoreContext : IdentityDbContext<User, IntRole, int>
+    public class StoreContext : IdentityDbContext<User, Role, int>
     {
 
         public virtual DbSet<Gender> Genders { get; set; }
@@ -50,7 +50,7 @@ namespace WebStore.Models
                 i.ToTable("Users");
                 i.HasKey(x => x.Id);
             });
-            modelBuilder.Entity<IntRole>(i =>
+            modelBuilder.Entity<Role>(i =>
             {
                 i.ToTable("Role");
                 i.HasKey(x => x.Id);

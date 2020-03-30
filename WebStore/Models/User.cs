@@ -3,11 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebStore.Models
 {
-    public class IntRole : IdentityRole<int> { }
+    public class Role : IdentityRole<int> { }
 
 
     public class User : IdentityUser<int>
-
     {
         [Required]
         [Display(Name = "Imię")]

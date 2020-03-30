@@ -538,7 +538,7 @@ namespace WebStore.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WebStore.Models.UserClasses.IntRole", b =>
+            modelBuilder.Entity("WebStore.Models.UserClasses.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -658,7 +658,7 @@ namespace WebStore.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("WebStore.Models.UserClasses.IntRole", null)
+                    b.HasOne("WebStore.Models.UserClasses.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -685,7 +685,7 @@ namespace WebStore.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("WebStore.Models.UserClasses.IntRole", null)
+                    b.HasOne("WebStore.Models.UserClasses.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
