@@ -381,12 +381,14 @@ namespace WebStore.Models
                     new Role
                     {
                         Id = 1,
-                        Name = "Admin"
+                        Name = "Admin",
+                        NormalizedName = "ADMIN"
                     },
                     new Role
                     {
                         Id = 2,
-                        Name = "User"
+                        Name = "User",
+                        NormalizedName = "USER"
                     }
                 );
 

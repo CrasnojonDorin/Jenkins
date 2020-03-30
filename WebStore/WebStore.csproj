@@ -53,6 +53,8 @@
     <Compile Remove="Migrations\20200329193142_AddRoleToUsers.Designer.cs" />
     <Compile Remove="Migrations\20200330175138_updat rols.cs" />
     <Compile Remove="Migrations\20200330175138_updat rols.Designer.cs" />
+    <Compile Remove="Migrations\20200330222538_SeedRoles.cs" />
+    <Compile Remove="Migrations\20200330222538_SeedRoles.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
