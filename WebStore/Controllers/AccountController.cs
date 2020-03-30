@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,8 @@ namespace WebStore.Controllers
             _mapper = mapper;
         }
 
-
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
 
@@ -44,6 +46,8 @@ namespace WebStore.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
 
@@ -54,8 +58,9 @@ namespace WebStore.Controllers
         }
 
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<IActionResult> Login(string returnUrl,LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -73,10 +78,7 @@ namespace WebStore.Controllers
                         //to po zalogowaniu przekieruje w to miejsce gdzie chcieliśmy wejść
                         return Redirect(returnUrl);
                     }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    return RedirectToAction("Index", "Home");
                 }
             }
 
@@ -85,7 +87,7 @@ namespace WebStore.Controllers
             return View("Login", model);
         }
 
-
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
@@ -107,6 +109,9 @@ namespace WebStore.Controllers
                 //czy użytkownik został utworzony
                 if (result.Succeeded)
                 {
+                    //automatycznie dodaj nowego użytkownika do roli User
+                    await _userManager.AddToRoleAsync(user, "User");
+
                     //zaloguj od razu po rejestracji
                     await _signInManager.SignInAsync(user, isPersistent: false);
 

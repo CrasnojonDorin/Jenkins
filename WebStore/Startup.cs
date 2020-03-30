@@ -1,7 +1,9 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -69,6 +71,13 @@ namespace WebStore
             services.AddDbContext<StoreContext>(opt =>opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllersWithViews();
+            services.AddMvc(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }).AddXmlSerializerFormatters();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,10 +112,12 @@ namespace WebStore
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             //W³¹czenie autentykacji, do rejestracji i logowania
             app.UseAuthentication();
+
+            app.UseAuthorization();
+
+            
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,4 +1,5 @@
-﻿@model WebStore.ViewModels.LoginViewModel
+﻿@using Microsoft.AspNetCore.Http
+@model WebStore.ViewModels.LoginViewModel
 @{
     ViewData["Title"] = "UserName";
 }
@@ -9,7 +10,7 @@
 
 
 
-@using (Html.BeginForm("Login", "Account"))
+@using (Html.BeginForm("Login", "Account", new {ReturnUrl=Context.Request.Query["ReturnUrl"] }))
 {
     @Html.AntiForgeryToken()
 

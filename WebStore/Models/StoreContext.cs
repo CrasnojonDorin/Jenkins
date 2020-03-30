@@ -58,12 +58,12 @@ namespace WebStore.Models
             modelBuilder.Entity<IdentityUserRole<int>>(i =>
             {
                 i.ToTable("UserRole");
-                i.HasKey(x => new { x.RoleId, x.UserId });
+                i.HasKey(x => new {x.RoleId, x.UserId});
             });
             modelBuilder.Entity<IdentityUserLogin<int>>(i =>
             {
                 i.ToTable("UserLogin");
-                i.HasKey(x => new { x.ProviderKey, x.LoginProvider });
+                i.HasKey(x => new {x.ProviderKey, x.LoginProvider});
             });
             modelBuilder.Entity<IdentityRoleClaim<int>>(i =>
             {
@@ -85,12 +85,12 @@ namespace WebStore.Models
             });
 
 
-           // Dodanie przykładowych produktów do tabeli Products
+            // Dodanie przykładowych produktów do tabeli Products
             modelBuilder.Entity<Product>()
                 .HasData(
                     new Product
                     {
-                        Id=1,
+                        Id = 1,
                         BrandId = 3,
                         ColorId = 2,
                         SexId = 3,
@@ -246,7 +246,7 @@ namespace WebStore.Models
                         Id = 1,
                         Name = "10",
                         TypeId = 1
-                        
+
                     },
                     new Size
                     {
@@ -278,7 +278,7 @@ namespace WebStore.Models
                     },
                     new Size
                     {
-                        Id =6,
+                        Id = 6,
                         Name = "S",
                         TypeId = 2
 
@@ -374,6 +374,22 @@ namespace WebStore.Models
                         Name = "Red"
                     }
                 );
+
+            //Dodanie roli do tabeli Role
+            modelBuilder.Entity<Role>()
+                .HasData(
+                    new Role
+                    {
+                        Id = 1,
+                        Name = "Admin"
+                    },
+                    new Role
+                    {
+                        Id = 2,
+                        Name = "User"
+                    }
+                );
+
 
 
         }

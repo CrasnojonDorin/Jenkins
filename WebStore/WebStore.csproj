@@ -51,6 +51,8 @@
     <Compile Remove="Migrations\20200329163420_AddUsersTable.Designer.cs" />
     <Compile Remove="Migrations\20200329193142_AddRoleToUsers.cs" />
     <Compile Remove="Migrations\20200329193142_AddRoleToUsers.Designer.cs" />
+    <Compile Remove="Migrations\20200330175138_updat rols.cs" />
+    <Compile Remove="Migrations\20200330175138_updat rols.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,16 +1,17 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using AutoMapper;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.IO;
+using System.Linq;
 using WebStore.Models;
 using WebStore.ViewModels.ProductViewModels;
 using Type = WebStore.Models.Type;
 
 namespace WebStore.Controllers
 {
+    [Authorize(Roles = "User")]
     public class ProductController : Controller
     {
         private readonly StoreContext _context;
