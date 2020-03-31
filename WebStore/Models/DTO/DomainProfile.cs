@@ -11,6 +11,7 @@ namespace WebStore.Models.DTO
         {
             CreateMap<User, User>();
             CreateMap<UserFormViewModel, User>();
+            CreateMap<User,UserFormViewModel>();
             CreateMap<UserDTO, User>();
             CreateMap<User, UserDTO>();
             CreateMap<UserSaveDTO, User>();
@@ -18,8 +19,6 @@ namespace WebStore.Models.DTO
             CreateMap<Product, ProductDTO>();
             CreateMap<Product, ProductFormViewModel>();
             CreateMap<ProductFormViewModel, Product>();
-
-
         }
     }
 }
