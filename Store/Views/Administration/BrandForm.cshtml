@@ -1,0 +1,130 @@
+﻿@model Store.Models.Brand
+
+@{
+    ViewData["Title"] = "Formularz brandu";
+}
+
+
+@{ 
+    await Html.RenderPartialAsync("Partial/_nav_product");
+}
+
+<hr />
+<br />
+
+<form id="myForm" enctype="multipart/form-data">
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div class="form-row">
+
+        <div class="form-group col-md-3">
+
+            @Html.LabelFor(b => b.Name)
+            @Html.TextBoxFor(b => b.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(b => b.Name)
+        </div>
+
+        <div class="col-md-2"></div>
+        <div class="form-group col-md-6">
+
+            @Html.LabelFor(b => b.Description)
+            @Html.TextAreaFor(b => b.Description, new { @class = "form-control" })
+            @Html.ValidationMessageFor(b => b.Description)
+        </div>
+
+
+    </div>
+    <br />
+    @{
+        if (Model.Name == null)
+        {
+
+            <div class="form-row">
+                <button id="save" type="button" value="Submit" class="btn btn-primary">Dodaj</button>
+            </div>
+        }
+        else
+        {
+            @Html.HiddenFor(x => x.Id);
+
+            <div class="form-row">
+                <button id="save" type="button" value="Submit" class="btn btn-primary">Zapisz</button>
+            </div>
+        }
+    }
+
+
+    <div class="form-row">
+        <div class="col-md-5"></div>
+
+
+
+        <div class="form-group col-md-3">
+            @{
+                if (Model.PhotoPath == null)
+                {
+                    Model.PhotoPath = "ImageDefault.png";
+                }
+            }
+            @Html.LabelFor(p => p.Photo)
+            <div class="col-md-10">
+                <img src="~/images/@Url.Content(Model.PhotoPath)" style="margin:10px" width="200" id="imagePreview" />
+                <input id="imageBrowes" type="file" name="Photo" accept="image/jpeg, image/png" onchange="ShowImagePreview(this, document.getElementById('imagePreview'))" />
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+
+
+</form>
+
+<button type="button" class="btn btn-dark"
+        onclick="location.href = '@Url.Action("Brand", "Administration")'">
+    Wróć do listy
+</button>
+
+
+
+@section Scripts{
+
+    <script src="~/js/main.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#save').click(function () {
+            $.validator.unobtrusive.parse(myForm);
+            if ($(myForm).valid()) {
+                var file = $('#imageBrowes').get(0).files;
+                var data = new FormData(myForm);
+                data.append('Photo', file[0]);
+
+
+                var ajaxConfig = {
+                    type: "POST",
+                    url: "/Administration/SaveBrand",
+                    data: data,
+                    success: function (response) {
+                        window.location.replace("/Administration/Brand");
+                    },
+                    error: function (xhr, status) {
+                        alert('Coś poszło nie tak :///');
+                    }
+                }
+
+                if ($(myForm).attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false;
+                    ajaxConfig["processData"] = false;
+                }
+
+                $.ajax(ajaxConfig);
+            }
+        });
+    });
+
+
+</script>
+}

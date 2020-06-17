@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Store.Models.Color>
+
+@{
+    ViewData["Title"] = "Color";
+}
+@{
+    await Html.RenderPartialAsync("Partial/_nav_product");
+}
+<br />
+<button type="button" class="btn btn-dark"
+        onclick="location.href = '@Url.Action("AddColor", "Administration")'">
+    Dodaj nowy kolor
+</button>
+<br />
+<br />
+
+
+<table class="table table-striped table-condensed">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                Edytuj
+            </th>
+            <th>
+                Usuń
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edytuj", "EditColor", new { id = item.Id })
+                </td>
+                <td>
+                    @Html.ActionLink("Usuń", "DeleteColor", new { id = item.Id })
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
