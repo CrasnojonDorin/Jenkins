@@ -1,4 +1,8 @@
-# Store
+# WEB STORE
+#### Video Demo:  https://www.youtube.com/watch?v=g7TgE1YW2Is
+#### Description:
+
+
 <img align="right" width="100" height="auto" src="https://github.com/pieetrus/.Net-i-Java/blob/master/Sklep-Projekt/Store/wwwroot/images/shoelogo-sm.png">
 Store is simple online shopping system.
 
