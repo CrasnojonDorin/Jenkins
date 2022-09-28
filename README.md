@@ -1,5 +1,4 @@
 # WEB STORE
-#### Video Demo:  https://www.youtube.com/watch?v=g7TgE1YW2Is
 #### Description:
 
 
