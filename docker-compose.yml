@@ -1,0 +1,16 @@
+services:
+  web_api:
+    image: ${ImageApi}
+    container_name: aspnet_application
+    ports:
+      - "5000:80"
+    depends_on:
+      - db
+  db:
+    image: "${LinkImageSql}"
+    container_name: db
+    ports: # not actually needed, because the two services are on the same network
+      - "1433:1433" 
+    environment:
+      - ACCEPT_EULA=y
+      - SA_PASSWORD=${SqlAdminPassword}
